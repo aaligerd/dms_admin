@@ -9,7 +9,7 @@ import PasswordReset from './pages/PasswordReset';
 
 function App() {
   return (
-    <Router>
+    <Router basename='/dms'>
       <div className="App font-sans text-gray-900 antialiased">
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
