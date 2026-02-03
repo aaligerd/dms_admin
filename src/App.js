@@ -9,13 +9,14 @@ import PasswordReset from './pages/PasswordReset';
 
 function App() {
   return (
-    <Router basename='/dms'>
+    <Router>
       <div className="App font-sans text-gray-900 antialiased">
         <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Navigate to="/dms/login" replace />} />
+          <Route path="/dms" element={<Navigate to="/dms/login" replace />} />
+          <Route path="/dms/login" element={<Login />} />
           <Route
-            path="/dashboard"
+            path="/dms/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
@@ -23,7 +24,7 @@ function App() {
             }
           />
           <Route
-            path="/add-user"
+            path="/dms/add-user"
             element={
               <ProtectedRoute>
                 <AddUser />
@@ -31,7 +32,7 @@ function App() {
             }
           />
           <Route
-            path="/add-employee"
+            path="/dms/add-employee"
             element={
               <ProtectedRoute>
                 <AddEmployee />
@@ -39,7 +40,7 @@ function App() {
             }
           />
           <Route
-            path="/password-reset"
+            path="/dms/password-reset"
             element={
               <ProtectedRoute>
                 <PasswordReset />
