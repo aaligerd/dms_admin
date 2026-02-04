@@ -6,6 +6,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const Sidebar = () => {
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
     const [isOrgModalOpen, setIsOrgModalOpen] = useState(false);
     const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
     const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
@@ -161,141 +162,173 @@ const Sidebar = () => {
     ];
 
     return (
-        <div className="flex flex-col w-64 h-screen px-4 py-8 bg-white border-r dark:bg-gray-900 dark:border-gray-700">
-            <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white mb-6">DMS Admin</h2>
-            <div className="flex flex-col justify-between flex-1 mt-6">
-                <nav>
-                    {navItems.map((item, index) => {
-                        if (item.path) {
-                            return (
+
+        <>
+            {/* 🔹 ADDED: mobile overlay */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
+                    onClick={() => setIsOpen(false)}
+                />
+            )}
+
+            <button
+                onClick={() => setIsOpen(true)}
+                className="md:hidden fixed top-4 left-4 z-50 p-2 bg-gray-900 text-white rounded-md"
+            >
+                ☰
+            </button>
+            <div
+                className={`fixed md:static top-0 left-0 z-50 h-screen w-64
+                bg-white border-r dark:bg-gray-900 dark:border-gray-700
+                transform transition-transform duration-300
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+                md:translate-x-0`}
+            >
+                <button
+                    onClick={() => setIsOpen(false)}
+                    className="md:hidden absolute top-2 right-3 text-2xl text-gray-700 dark:text-gray-200"
+                >
+                    ✕
+                </button>
+
+                <div className="h-full px-4 py-8">
+                    <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white mb-6">DMS Admin</h2>
+                    <div className="flex flex-col justify-between flex-1 mt-6">
+                        <nav>
+                            {navItems.map((item, index) => {
+                                if (item.path) {
+                                    return (
+                                        <NavLink
+                                            key={index}
+                                            to={item.path}
+                                            className={({ isActive }) =>
+                                                `flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 ${isActive ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200' : ''}`
+                                            }
+                                        >
+                                            {item.icon}
+                                            <span className="mx-4 font-medium">{item.name}</span>
+                                        </NavLink>
+                                    );
+                                } else {
+                                    return (
+                                        <button
+                                            key={index}
+                                            onClick={item.action}
+                                            className="flex items-center w-full px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                                        >
+                                            {item.icon}
+                                            <span className="mx-4 font-medium">{item.name}</span>
+                                        </button>
+                                    );
+                                }
+                            })}
+                            {user_role && user_role === 'SUPERADMIN' && (
                                 <NavLink
-                                    key={index}
-                                    to={item.path}
+                                    to="/password-reset"
                                     className={({ isActive }) =>
-                                        `flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 ${isActive ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200' : ''}`
+                                        `flex items-center px-4 py-2 mt-5 mb-4 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 ${isActive ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200' : ''}`
                                     }
                                 >
-                                    {item.icon}
-                                    <span className="mx-4 font-medium">{item.name}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                    </svg>
+                                    <span className="mx-4 font-medium">Password Reset</span>
                                 </NavLink>
-                            );
-                        } else {
-                            return (
-                                <button
-                                    key={index}
-                                    onClick={item.action}
-                                    className="flex items-center w-full px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                >
-                                    {item.icon}
-                                    <span className="mx-4 font-medium">{item.name}</span>
-                                </button>
-                            );
-                        }
-                    })}
-                    {user_role && user_role === 'SUPERADMIN' && (
-                        <NavLink
-                            to="/password-reset"
-                            className={({ isActive }) =>
-                                `flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 ${isActive ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200' : ''}`
-                            }
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                            <span className="mx-4 font-medium">Password Reset</span>
-                        </NavLink>
-                    )}
-                </nav>
+                            )}
+                        </nav>
 
-                <div className="flex items-center px-4 -mx-2 mt-auto">
-                    <button onClick={handleLogout} className="flex items-center justify-center w-full px-4 py-2 text-white transition-colors duration-300 transform bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-80">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                        <span className="mx-1">Logout</span>
-                    </button>
+                        <div className="flex items-center px-4 -mx-2 mt-auto">
+                            <button onClick={handleLogout} className="flex items-center justify-center w-full px-4 py-2 text-white transition-colors duration-300 transform bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-80">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                                <span className="mx-1">Logout</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Add Organisation Modal */}
+                    <Modal isOpen={isOrgModalOpen} onClose={() => setIsOrgModalOpen(false)} title="Add Organisation">
+                        <form onSubmit={(e) => { e.preventDefault(); handleAddOrg(); }}>
+                            <div className="mb-4">
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Organisation Name</label>
+                                <input
+                                    type="text"
+                                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                    placeholder="Enter organisation name"
+                                    value={orgName}
+                                    onChange={(e) => setOrgName(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex justify-end mt-6">
+                                <button type="button" onClick={() => setIsOrgModalOpen(false)} className="px-4 py-2 mr-2 text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:bg-gray-300">
+                                    Cancel
+                                </button>
+                                <button type="submit" className="px-4 py-2 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">
+                                    Add Organisation
+                                </button>
+                            </div>
+                        </form>
+                    </Modal>
+
+                    {/* Add Department Modal */}
+                    <Modal isOpen={isDeptModalOpen} onClose={() => setIsDeptModalOpen(false)} title="Add Department">
+                        <form onSubmit={(e) => { e.preventDefault(); handleAddDept(); }}>
+                            <div className="mb-4">
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Department Name</label>
+                                <input
+                                    type="text"
+                                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                    placeholder="Enter department name"
+                                    value={deptName}
+                                    onChange={(e) => setDeptName(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex justify-end mt-6">
+                                <button type="button" onClick={() => setIsDeptModalOpen(false)} className="px-4 py-2 mr-2 text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:bg-gray-300">
+                                    Cancel
+                                </button>
+                                <button type="submit" className="px-4 py-2 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">
+                                    Add Department
+                                </button>
+                            </div>
+                        </form>
+                    </Modal>
+
+                    {/* Reset Password Modal */}
+                    <Modal isOpen={isResetPasswordModalOpen} onClose={() => setIsResetPasswordModalOpen(false)} title="Reset Password">
+                        <form onSubmit={(e) => { e.preventDefault(); handleResetPassword(); }}>
+                            <div className="mb-4 flex flex-col gap-4">
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Reset Password</label>
+                                <input
+                                    type="password"
+                                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                    placeholder="Enter password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <input
+                                    type="text"
+                                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                    placeholder="Enter confirm password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex justify-end mt-6">
+                                <button type="button" onClick={() => setIsResetPasswordModalOpen(false)} className="px-4 py-2 mr-2 text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:bg-gray-300">
+                                    Cancel
+                                </button>
+                                <button type="submit" className="px-4 py-2 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">
+                                    Reset Password
+                                </button>
+                            </div>
+                        </form>
+                    </Modal>
                 </div>
             </div>
-
-            {/* Add Organisation Modal */}
-            <Modal isOpen={isOrgModalOpen} onClose={() => setIsOrgModalOpen(false)} title="Add Organisation">
-                <form onSubmit={(e) => { e.preventDefault(); handleAddOrg(); }}>
-                    <div className="mb-4">
-                        <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Organisation Name</label>
-                        <input
-                            type="text"
-                            className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
-                            placeholder="Enter organisation name"
-                            value={orgName}
-                            onChange={(e) => setOrgName(e.target.value)}
-                        />
-                    </div>
-                    <div className="flex justify-end mt-6">
-                        <button type="button" onClick={() => setIsOrgModalOpen(false)} className="px-4 py-2 mr-2 text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:bg-gray-300">
-                            Cancel
-                        </button>
-                        <button type="submit" className="px-4 py-2 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">
-                            Add Organisation
-                        </button>
-                    </div>
-                </form>
-            </Modal>
-
-            {/* Add Department Modal */}
-            <Modal isOpen={isDeptModalOpen} onClose={() => setIsDeptModalOpen(false)} title="Add Department">
-                <form onSubmit={(e) => { e.preventDefault(); handleAddDept(); }}>
-                    <div className="mb-4">
-                        <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Department Name</label>
-                        <input
-                            type="text"
-                            className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
-                            placeholder="Enter department name"
-                            value={deptName}
-                            onChange={(e) => setDeptName(e.target.value)}
-                        />
-                    </div>
-                    <div className="flex justify-end mt-6">
-                        <button type="button" onClick={() => setIsDeptModalOpen(false)} className="px-4 py-2 mr-2 text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:bg-gray-300">
-                            Cancel
-                        </button>
-                        <button type="submit" className="px-4 py-2 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">
-                            Add Department
-                        </button>
-                    </div>
-                </form>
-            </Modal>
-
-            {/* Reset Password Modal */}
-            <Modal isOpen={isResetPasswordModalOpen} onClose={() => setIsResetPasswordModalOpen(false)} title="Reset Password">
-                <form onSubmit={(e) => { e.preventDefault(); handleResetPassword(); }}>
-                    <div className="mb-4 flex flex-col gap-4">
-                        <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Reset Password</label>
-                        <input
-                            type="password"
-                            className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
-                            placeholder="Enter password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
-                            placeholder="Enter confirm password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                    </div>
-                    <div className="flex justify-end mt-6">
-                        <button type="button" onClick={() => setIsResetPasswordModalOpen(false)} className="px-4 py-2 mr-2 text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:bg-gray-300">
-                            Cancel
-                        </button>
-                        <button type="submit" className="px-4 py-2 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">
-                            Reset Password
-                        </button>
-                    </div>
-                </form>
-            </Modal>
-        </div>
+        </>
     );
 };
 

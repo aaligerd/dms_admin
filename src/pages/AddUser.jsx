@@ -91,7 +91,7 @@ const AddUser = () => {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <header className="flex justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
                     <div className="flex items-center">
-                        <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">Add User</h1>
+                        <h1 className="text-2xl font-semibold text-gray-800 dark:text-white ml-10 lg:ml-0 md:ml-0">Add User</h1>
                     </div>
                 </header>
 
@@ -143,38 +143,80 @@ const AddUser = () => {
                                 </div>
 
                                 <div className="mb-6">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Organisation</label>
+                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                        Organisation
+                                    </label>
+
                                     <select
                                         name="org_id"
                                         value={formData.org_id}
                                         onChange={handleChange}
                                         required
-                                        className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                        className="
+                                        block w-full
+                                        px-3 sm:px-4 py-2
+                                        text-sm sm:text-base
+                                        text-gray-700 bg-white
+                                        border border-gray-300 rounded-md
+                                        dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                        focus:border-indigo-500 dark:focus:border-indigo-500
+                                        focus:outline-none focus:ring
+                                        truncate
+                                    "
                                     >
                                         <option value="">Select Organisation</option>
+
                                         {organisations.map((org) => (
-                                            <option key={org.org_id || org.id} value={org.org_id || org.id}>{org.org_name || org.name}</option>
+                                            <option
+                                                key={org.org_id || org.id}
+                                                value={org.org_id || org.id}
+                                                title={org.org_name || org.name}
+                                            >
+                                                {org.org_name || org.name}
+                                            </option>
                                         ))}
                                     </select>
                                 </div>
 
+
                                 <div className="mb-6">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Department</label>
+                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                        Department
+                                    </label>
+
                                     <select
                                         name="dept_id"
                                         value={formData.dept_id}
                                         onChange={handleChange}
                                         required
-                                        className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                        className="
+                                        block w-full
+                                        px-3 sm:px-4 py-2
+                                        text-sm sm:text-base
+                                        text-gray-700 bg-white
+                                        border border-gray-300 rounded-md
+                                        dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                        focus:border-indigo-500 dark:focus:border-indigo-500
+                                        focus:outline-none focus:ring
+                                        truncate
+                                    "
                                     >
                                         <option value="">Select Department</option>
+
                                         {departments.map((dept) => (
-                                            <option key={dept.dept_id || dept.id} value={dept.dept_id || dept.id}>{dept.dept_name || dept.name}</option>
+                                            <option
+                                                key={dept.dept_id || dept.id}
+                                                value={dept.dept_id || dept.id}
+                                                title={dept.dept_name || dept.name}
+                                            >
+                                                {dept.dept_name || dept.name}
+                                            </option>
                                         ))}
                                     </select>
                                 </div>
 
-                                <div className="mt-8 flex justify-end">
+
+                                <div className="mt-8 flex justify-center lg:justify-end">
                                     <button type="submit" className="px-8 py-2.5 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500 font-semibold shadow-md">
                                         Create User
                                     </button>

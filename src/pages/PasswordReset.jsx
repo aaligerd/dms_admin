@@ -47,11 +47,11 @@ const PasswordReset = () => {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <header className="flex justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
                     <div className="flex items-center">
-                        <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">Password Reset</h1>
+                        <h1 className="text-2xl font-semibold text-gray-800 dark:text-white ml-10 lg:ml-0 md:ml-0">Password Reset</h1>
                     </div>
                     <div className="flex items-center space-x-3">
                         {userName && (
-                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300 hidden lg:block md:block">
                                 Welcome, {userName}
                             </span>
                         )}
@@ -78,7 +78,9 @@ const PasswordReset = () => {
                                     <td className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200">{user.user_emp_code}</td>
                                     <td className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200">{user.user_name}</td>
                                     <td className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200">
-                                        <button className="px-2 py-1 text-sm font-semibold text-white bg-blue-500 rounded hover:bg-blue-600" onClick={() => handleResetPassword(user.user_id)}>Reset Password</button>
+                                        <button className="flex px-2 py-1 text-sm font-semibold text-white bg-blue-500 rounded hover:bg-blue-600" onClick={() => handleResetPassword(user.user_id)}>
+                                            Reset <span className='ml-1 hidden lg:block md:block'>Password</span>
+                                        </button>
                                     </td>
                                 </tr>
                             ))}

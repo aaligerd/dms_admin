@@ -65,7 +65,7 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 px-4 sm:px-0">
             <div className="w-full max-w-md">
                 <div className="bg-white dark:bg-gray-800 shadow-2xl rounded-2xl overflow-hidden">
                     {/* Header */}

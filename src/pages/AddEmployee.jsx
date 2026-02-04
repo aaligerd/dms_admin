@@ -157,7 +157,7 @@ const AddEmployee = () => {
             <Sidebar />
             <div className="flex-1 flex flex-col overflow-hidden">
                 <header className="flex justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
-                    <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">Add Employee</h1>
+                    <h1 className="text-2xl font-semibold text-gray-800 dark:text-white ml-9 lg:ml-0 md:ml-0">Add Employee</h1>
                 </header>
                 <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-gray-900 p-6">
                     <div className="w-full max-w-3xl mx-auto mt-10">
@@ -240,20 +240,46 @@ const AddEmployee = () => {
                                             );
                                         } else if (field.type === 'select') {
                                             return (
-                                                <div key={index}>
-                                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
-                                                    <select
-                                                        name={field.name}
-                                                        onChange={handleChange}
-                                                        required={field.required}
-                                                        className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
-                                                    >
-                                                        <option value="">Select {field.label}</option>
-                                                        {field.options.map(opt => (
-                                                            <option key={opt[field.valueKey]} value={opt[field.valueKey]}>{opt[field.labelKey]}</option>
-                                                        ))}
-                                                    </select>
+                                                <div key={index} className="w-full">
+                                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                        {field.label}
+                                                    </label>
+
+                                                    <div className="relative">
+                                                        <select
+                                                            name={field.name}
+                                                            onChange={handleChange}
+                                                            required={field.required}
+                                                            className="
+                                                            block w-full
+                                                            px-3 sm:px-4 py-2
+                                                            text-sm sm:text-base
+                                                            text-gray-700 dark:text-gray-300
+                                                            bg-white dark:bg-gray-800
+                                                            border border-gray-300 dark:border-gray-600
+                                                            rounded-md
+                                                            focus:border-indigo-500 dark:focus:border-indigo-500
+                                                            focus:outline-none focus:ring
+                                                            truncate
+                                                        "
+                                                        >
+                                                            <option value="">
+                                                                Select {field.label}
+                                                            </option>
+
+                                                            {field.options.map((opt) => (
+                                                                <option
+                                                                    key={opt[field.valueKey]}
+                                                                    value={opt[field.valueKey]}
+                                                                    className="truncate"
+                                                                >
+                                                                    {opt[field.labelKey]}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
                                                 </div>
+
                                             );
                                         } else if (field.type === 'date') {
                                             return (
@@ -273,83 +299,156 @@ const AddEmployee = () => {
                                 </div>
                                 {/* marksheet section */}
                                 <div className="mt-8">
-                                    <h3 className="text-lg font-medium text-gray-700 dark:text-white mb-4">Marksheets</h3>
+                                    <h3 className="text-lg font-medium text-gray-700 dark:text-white mb-4">
+                                        Marksheets
+                                    </h3>
+
                                     {marksheets.length > 0 && marksheets.map((mark, index) => (
-                                        <div key={index} className="flex gap-4 items-end mb-4 border p-4 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                            <div className="flex-1">
-                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Marksheet Name</label>
+                                        <div
+                                            key={index}
+                                            className="
+                                            mb-4 p-4 rounded-lg border
+                                            bg-gray-50 dark:bg-gray-700
+                                            flex flex-col gap-4
+                                            md:flex-row md:items-end
+                                        "
+                                        >
+                                            {/* Marksheet Name */}
+                                            <div className="w-full md:flex-1">
+                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                    Marksheet Name
+                                                </label>
                                                 <input
                                                     type="text"
                                                     name={`marksheet_name_${index}`}
                                                     value={mark.name}
-                                                    onChange={(e) => handleMarksheetChange(index, 'name', e.target.value)}
-                                                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                                    onChange={(e) =>
+                                                        handleMarksheetChange(index, 'name', e.target.value)
+                                                    }
+                                                    className="block w-full px-4 py-2 text-sm sm:text-base
+                                                    text-gray-700 bg-white border border-gray-300 rounded-md
+                                                    dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                                    focus:border-indigo-500 focus:outline-none focus:ring"
                                                 />
                                             </div>
-                                            <div className="flex-1">
-                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Marksheet File</label>
+
+                                            {/* Marksheet File */}
+                                            <div className="w-full md:flex-1">
+                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                    Marksheet File
+                                                </label>
                                                 <input
                                                     type="file"
                                                     name={`marksheet_file_${index}`}
-                                                    onChange={(e) => handleMarksheetChange(index, 'file', e.target.files[0])}
-                                                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                                    onChange={(e) =>
+                                                        handleMarksheetChange(index, 'file', e.target.files[0])
+                                                    }
+                                                    className="block w-full px-4 py-2 text-sm sm:text-base
+                                                    text-gray-700 bg-white border border-gray-300 rounded-md
+                                                    dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                                    focus:border-indigo-500 focus:outline-none focus:ring"
                                                 />
                                             </div>
-                                            <div className="flex-shrink-0">
+
+                                            {/* Remove Button */}
+                                            <div className="w-full md:w-auto flex lg:justify-end justify-center md:justify-end">
                                                 <button
                                                     type="button"
                                                     onClick={() => handleMarksheetRemove(index)}
-                                                    className="text-gray-600 dark:text-gray-200 hover:text-gray-800 dark:hover:text-gray-100"
+                                                    className="px-4 py-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600"
                                                 >
-                                                    Remove
+                                                    X
                                                 </button>
                                             </div>
                                         </div>
                                     ))}
+
                                     <button
                                         type="button"
-                                        onClick={() => handleMarksheetAdd()}
+                                        onClick={handleMarksheetAdd}
                                         className="mt-4 px-4 py-2 text-white bg-indigo-500 hover:bg-indigo-600 rounded-md"
                                     >
-                                        Add Marksheet
+                                        + Add Marksheet
                                     </button>
                                 </div>
 
+
                                 {/* Certificates Section */}
                                 <div className="mt-8">
-                                    <h3 className="text-lg font-medium text-gray-700 dark:text-white mb-4">Certificates</h3>
+                                    <h3 className="text-lg font-medium text-gray-700 dark:text-white mb-4">
+                                        Certificates
+                                    </h3>
+
                                     {certificates.map((cert, index) => (
-                                        <div key={index} className="flex gap-4 items-end mb-4 border p-4 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                            <div className="flex-1">
-                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Certificate Name</label>
+                                        <div
+                                            key={index}
+                                            className="
+                                            mb-4 p-4 rounded-lg border
+                                            bg-gray-50 dark:bg-gray-700
+                                            flex flex-col gap-4
+                                            md:flex-row md:items-end
+                                        "
+                                        >
+                                            {/* Certificate Name */}
+                                            <div className="w-full md:flex-1">
+                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                    Certificate Name
+                                                </label>
                                                 <input
                                                     type="text"
                                                     name={`certificate_name_${index}`}
                                                     value={cert.name}
-                                                    onChange={(e) => handleCertificateChange(index, 'name', e.target.value)}
-                                                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                                    onChange={(e) =>
+                                                        handleCertificateChange(index, 'name', e.target.value)
+                                                    }
+                                                    className="block w-full px-4 py-2 text-sm sm:text-base
+                                                    text-gray-700 bg-white border border-gray-300 rounded-md
+                                                    dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                                    focus:border-indigo-500 focus:outline-none focus:ring"
                                                 />
                                             </div>
-                                            <div className="flex-1">
-                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Upload File</label>
+
+                                            {/* Certificate File */}
+                                            <div className="w-full md:flex-1">
+                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                    Upload File
+                                                </label>
                                                 <input
                                                     type="file"
                                                     name={`certificate_file_${index}`}
-                                                    onChange={(e) => handleCertificateChange(index, 'file', e.target)}
-                                                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
+                                                    onChange={(e) =>
+                                                        handleCertificateChange(index, 'file', e.target)
+                                                    }
+                                                    className="block w-full px-4 py-2 text-sm sm:text-base
+                                                    text-gray-700 bg-white border border-gray-300 rounded-md
+                                                    dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                                    focus:border-indigo-500 focus:outline-none focus:ring"
                                                 />
                                             </div>
-                                            <button type="button" onClick={() => removeCertificate(index)} className="px-3 py-2 text-white bg-red-500 rounded hover:bg-red-600">
-                                                X
-                                            </button>
+
+                                            {/* Remove Button */}
+                                            <div className="w-full md:w-auto flex lg:justify-end justify-center md:justify-end">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeCertificate(index)}
+                                                    className="px-4 py-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600"
+                                                >
+                                                    X
+                                                </button>
+                                            </div>
                                         </div>
                                     ))}
-                                    <button type="button" onClick={addCertificate} className="mt-2 px-4 py-2 text-sm text-indigo-600 bg-indigo-100 rounded hover:bg-indigo-200">
+
+                                    <button
+                                        type="button"
+                                        onClick={addCertificate}
+                                        className="mt-2 px-4 py-2 text-sm text-indigo-600 bg-indigo-100 rounded hover:bg-indigo-200"
+                                    >
                                         + Add Certificate
                                     </button>
                                 </div>
 
-                                <div className="mt-8 flex justify-end">
+                                <div className="mt-8 flex lg:justify-end justify-center">
                                     <button type="submit" className="px-8 py-2.5 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500 font-semibold shadow-md">
                                         Submit Employee Details
                                     </button>

@@ -520,16 +520,22 @@ const EmployeeSearch = () => {
             <Modal isOpen={isModalOpen} onClose={closeModal} title="Employee Details" maxWidth="w-11/12 md:w-1/2 max-w-none">
                 {selectedEmployee ? (
                     <>
-                        <div className="flex justify-end mb-4 px-4 pt-2">
+                        {/* Top action button */}
+                        <div className="flex lg:justify-end md:justify-center justify-center px-3 py-2 sm:px-4 sm:py-2">
                             <button
                                 onClick={openUpdateModal}
-                                className="px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none font-semibold shadow-md">
+                                className="px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none font-semibold shadow-md">
                                 Update Employee
                             </button>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 max-h-[80vh] overflow-y-auto">
+
+                        {/* Form fields */}
+                        <div
+                            className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 px-3 py-2 sm:px-4 sm:py-3 max-h-[80vh] overflow-y-auto"
+                        >
                             {masterArray.map((field) => renderField(field, selectedEmployee))}
                         </div>
+
                     </>
                 ) : (
                     <div className="p-4 text-center">Loading details...</div>
@@ -537,177 +543,287 @@ const EmployeeSearch = () => {
             </Modal>
 
             {/* Update Modal */}
-            <Modal isOpen={isUpdateModalOpen} onClose={closeUpdateModal} title="Update Employee" maxWidth="w-11/12 md:w-2/3 max-w-none">
-                <form onSubmit={handleUpdateSubmit} className="p-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[70vh] overflow-y-auto">
-                        {/* Text/Number/Email/Date Fields */}
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Employee Name</label>
-                            <input type="text" name="emp_name" value={updateFormData.emp_name || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Employee Org ID</label>
-                            <input type="text" name="emp_org_id" value={updateFormData.emp_org_id || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Organisation</label>
-                            <select name="org_id" value={updateFormData.org_id || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring">
-                                <option value="">Select Organisation</option>
-                                {organisations.map(opt => (
-                                    <option key={opt.org_id} value={opt.org_id}>{opt.org_name}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Department</label>
-                            <select name="dept_id" value={updateFormData.dept_id || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring">
-                                <option value="">Select Department</option>
-                                {departments.map(opt => (
-                                    <option key={opt.dept_id} value={opt.dept_id}>{opt.dept_name}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Contact Number</label>
-                            <input type="text" name="contact_number" value={updateFormData.contact_number || ''} onChange={handleUpdateChange} required pattern="[0-9]{10}" maxLength="10" title="Contact number must be exactly 10 digits" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Emergency Contact Number</label>
-                            <input type="text" name="emergency_contact_number" value={updateFormData.emergency_contact_number || ''} onChange={handleUpdateChange} required pattern="[0-9]{10}" maxLength="10" title="Emergency contact number must be exactly 10 digits" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Emergency Contact Person Name</label>
-                            <input type="text" name="emergency_contact_person_name" value={updateFormData.emergency_contact_person_name || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Address</label>
-                            <input type="text" name="address" value={updateFormData.address || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Designation</label>
-                            <input type="text" name="designation" value={updateFormData.designation || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Email</label>
-                            <input type="email" name="email" value={updateFormData.email || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">PAN Number</label>
-                            <input type="text" name="pan_number" value={updateFormData.pan_number || ''} onChange={handleUpdateChange} required pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxLength="10" title="PAN must be 10 characters (e.g., ABCDE1234F)" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">PAN Card Image</label>
-                            <input type="file" name="pan_pic" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                            {selectedEmployee?.pan_pic && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.pan_pic}</div>}
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Aadhaar Number</label>
-                            <input type="text" name="aadhaar_number" value={updateFormData.aadhaar_number || ''} onChange={handleUpdateChange} required pattern="[0-9]{12}" maxLength="12" title="Aadhaar must be exactly 12 digits" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Aadhaar Card Image</label>
-                            <input type="file" name="aadhaar_pic" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                            {selectedEmployee?.aadhaar_pic && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.aadhaar_pic}</div>}
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">UAN Number</label>
-                            <input type="text" name="uan" value={updateFormData.uan || ''} onChange={handleUpdateChange} pattern="[0-9]{12}" maxLength="12" title="UAN must be exactly 12 digits" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Offer Letter</label>
-                            <input type="file" name="offer_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                            {selectedEmployee?.offer_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.offer_letter}</div>}
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Old Org Name</label>
-                            <input type="text" name="old_org_name" value={updateFormData.old_org_name || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Old Company Release Letter</label>
-                            <input type="file" name="old_company_release_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                            {selectedEmployee?.old_company_release_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.old_company_release_letter}</div>}
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Old Pay Slip</label>
-                            <input type="file" name="old_pay_slip" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                            {selectedEmployee?.old_pay_slip && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.old_pay_slip}</div>}
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Joining Letter</label>
-                            <input type="file" name="joining_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                            {selectedEmployee?.joining_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.joining_letter}</div>}
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Confirmation Letter</label>
-                            <input type="file" name="confirmation_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                            {selectedEmployee?.confirmation_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.confirmation_letter}</div>}
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Join Date</label>
-                            <input type="date" name="join_date" value={updateFormData.join_date || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Release Letter</label>
-                            <input type="file" name="release_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                            {selectedEmployee?.release_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.release_letter}</div>}
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Bank Name</label>
-                            <input type="text" name="bank_name" value={updateFormData.bank_name || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">IFSC Code</label>
-                            <input type="text" name="ifsc_code" value={updateFormData.ifsc_code || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                        </div>
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Bank Account Number</label>
-                            <input type="text" name="bank_account_number" value={updateFormData.bank_account_number || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+            <Modal isOpen={isUpdateModalOpen} onClose={closeUpdateModal} title="Update Employee" maxWidth="w-[95vw] md:w-[90vw] lg:w-[85vw] xl:w-[80vw] max-w-none">
+                <form onSubmit={handleUpdateSubmit} className="flex flex-col h-[85vh]">
+                    <div className="flex-1 overflow-y-auto px-3 sm:px-4 py-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+
+                            {/* Text/Number/Email/Date Fields */}
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Employee Name</label>
+                                <input type="text" name="emp_name" value={updateFormData.emp_name || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Employee Org ID</label>
+                                <input type="text" name="emp_org_id" value={updateFormData.emp_org_id || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Organisation</label>
+                                <select name="org_id" value={updateFormData.org_id || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring">
+                                    <option value="">Select Organisation</option>
+                                    {organisations.map(opt => (
+                                        <option key={opt.org_id} value={opt.org_id}>{opt.org_name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Department</label>
+                                <select name="dept_id" value={updateFormData.dept_id || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring">
+                                    <option value="">Select Department</option>
+                                    {departments.map(opt => (
+                                        <option key={opt.dept_id} value={opt.dept_id}>{opt.dept_name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Contact Number</label>
+                                <input type="text" name="contact_number" value={updateFormData.contact_number || ''} onChange={handleUpdateChange} required pattern="[0-9]{10}" maxLength="10" title="Contact number must be exactly 10 digits" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Emergency Contact Number</label>
+                                <input type="text" name="emergency_contact_number" value={updateFormData.emergency_contact_number || ''} onChange={handleUpdateChange} required pattern="[0-9]{10}" maxLength="10" title="Emergency contact number must be exactly 10 digits" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Emergency Contact Person Name</label>
+                                <input type="text" name="emergency_contact_person_name" value={updateFormData.emergency_contact_person_name || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Address</label>
+                                <input type="text" name="address" value={updateFormData.address || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Designation</label>
+                                <input type="text" name="designation" value={updateFormData.designation || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Email</label>
+                                <input type="email" name="email" value={updateFormData.email || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">PAN Number</label>
+                                <input type="text" name="pan_number" value={updateFormData.pan_number || ''} onChange={handleUpdateChange} required pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxLength="10" title="PAN must be 10 characters (e.g., ABCDE1234F)" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">PAN Card Image</label>
+                                <input type="file" name="pan_pic" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.pan_pic && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.pan_pic}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Aadhaar Number</label>
+                                <input type="text" name="aadhaar_number" value={updateFormData.aadhaar_number || ''} onChange={handleUpdateChange} required pattern="[0-9]{12}" maxLength="12" title="Aadhaar must be exactly 12 digits" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Aadhaar Card Image</label>
+                                <input type="file" name="aadhaar_pic" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.aadhaar_pic && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.aadhaar_pic}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">UAN Number</label>
+                                <input type="text" name="uan" value={updateFormData.uan || ''} onChange={handleUpdateChange} pattern="[0-9]{12}" maxLength="12" title="UAN must be exactly 12 digits" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Offer Letter</label>
+                                <input type="file" name="offer_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.offer_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.offer_letter}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Old Org Name</label>
+                                <input type="text" name="old_org_name" value={updateFormData.old_org_name || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Old Company Release Letter</label>
+                                <input type="file" name="old_company_release_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.old_company_release_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.old_company_release_letter}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Old Pay Slip</label>
+                                <input type="file" name="old_pay_slip" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.old_pay_slip && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.old_pay_slip}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Joining Letter</label>
+                                <input type="file" name="joining_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.joining_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.joining_letter}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Confirmation Letter</label>
+                                <input type="file" name="confirmation_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.confirmation_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.confirmation_letter}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Join Date</label>
+                                <input type="date" name="join_date" value={updateFormData.join_date || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Release Letter</label>
+                                <input type="file" name="release_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.release_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.release_letter}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Bank Name</label>
+                                <input type="text" name="bank_name" value={updateFormData.bank_name || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">IFSC Code</label>
+                                <input type="text" name="ifsc_code" value={updateFormData.ifsc_code || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Bank Account Number</label>
+                                <input type="text" name="bank_account_number" value={updateFormData.bank_account_number || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            </div>
                         </div>
                     </div>
 
                     {/* Marksheets Section */}
-                    <div className="mt-8">
-                        <h3 className="text-lg font-medium text-gray-700 dark:text-white mb-4">Marksheets</h3>
+                    <div className="mt-4">
+                        <h3 className="text-sm font-semibold text-gray-700 dark:text-white mb-2">
+                            Marksheets
+                        </h3>
+
                         {updateMarksheets.map((mark, index) => (
-                            <div key={index} className="flex gap-4 items-end mb-4 border p-4 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                <div className="flex-1">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Marksheet Name</label>
-                                    <input type="text" name={`marksheet_name_${index}`} value={mark.name} onChange={(e) => handleUpdateMarksheetChange(index, 'name', e.target.value)} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            <div
+                                key={index}
+                                className="
+                                grid grid-cols-1 md:grid-cols-5
+                                gap-2 mb-2
+                                border p-2 rounded-md
+                                bg-gray-50 dark:bg-gray-700
+                            "
+                            >
+                                {/* Name */}
+                                <div className="md:col-span-2">
+                                    <label className="text-xs text-gray-500 dark:text-gray-300">
+                                        Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={mark.name}
+                                        onChange={(e) =>
+                                            handleUpdateMarksheetChange(index, 'name', e.target.value)
+                                        }
+                                        className="w-full px-2 py-1.5 text-sm rounded border dark:bg-gray-800"
+                                    />
                                 </div>
-                                <div className="flex-1">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Marksheet File</label>
-                                    <input type="file" name={`marksheet_file_${index}`} onChange={(e) => handleUpdateMarksheetChange(index, 'file', e.target.files[0])} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                                    {mark.existingFile && <div className="text-xs text-gray-500 mt-1">Current: {mark.existingFile}</div>}
+
+                                {/* File */}
+                                <div className="md:col-span-2">
+                                    <label className="text-xs text-gray-500 dark:text-gray-300">
+                                        File
+                                    </label>
+                                    <input
+                                        type="file"
+                                        onChange={(e) =>
+                                            handleUpdateMarksheetChange(index, 'file', e.target.files[0])
+                                        }
+                                        className="w-full text-sm"
+                                    />
+                                    {mark.existingFile && (
+                                        <p className="text-[10px] text-gray-500 truncate">
+                                            {mark.existingFile}
+                                        </p>
+                                    )}
                                 </div>
-                                <div className="flex-shrink-0">
-                                    <button type="button" onClick={() => handleUpdateMarksheetRemove(index)} className="px-3 py-2 text-white bg-red-500 rounded hover:bg-red-600">Remove</button>
+
+                                {/* Remove */}
+                                <div className="flex items-end justify-end">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleUpdateMarksheetRemove(index)}
+                                        className="px-2 py-1 text-xs bg-red-500 text-white rounded"
+                                    >
+                                        ✕
+                                    </button>
                                 </div>
                             </div>
                         ))}
-                        <button type="button" onClick={handleUpdateMarksheetAdd} className="mt-4 px-4 py-2 text-white bg-indigo-500 hover:bg-indigo-600 rounded-md">Add Marksheet</button>
+
+                        <button
+                            type="button"
+                            onClick={handleUpdateMarksheetAdd}
+                            className="mt-1 text-xs px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200"
+                        >
+                            + Add Marksheet
+                        </button>
                     </div>
+
+
+
 
                     {/* Certificates Section */}
-                    <div className="mt-8">
-                        <h3 className="text-lg font-medium text-gray-700 dark:text-white mb-4">Certificates</h3>
+                    <div className="mt-4">
+                        <h3 className="text-sm font-semibold text-gray-700 dark:text-white mb-2">
+                            Certificates
+                        </h3>
+
                         {updateCertificates.map((cert, index) => (
-                            <div key={index} className="flex gap-4 items-end mb-4 border p-4 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                <div className="flex-1">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Certificate Name</label>
-                                    <input type="text" name={`certificate_name_${index}`} value={cert.name} onChange={(e) => handleUpdateCertificateChange(index, 'name', e.target.value)} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                            <div
+                                key={index}
+                                className="
+                                grid grid-cols-1 md:grid-cols-5
+                                gap-2 mb-2
+                                border p-2 rounded-md
+                                bg-gray-50 dark:bg-gray-700
+                            "
+                            >
+                                {/* Name */}
+                                <div className="md:col-span-2">
+                                    <label className="text-xs text-gray-500 dark:text-gray-300">
+                                        Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={cert.name}
+                                        onChange={(e) =>
+                                            handleUpdateCertificateChange(index, 'name', e.target.value)
+                                        }
+                                        className="w-full px-2 py-1.5 text-sm rounded border dark:bg-gray-800"
+                                    />
                                 </div>
-                                <div className="flex-1">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Upload File</label>
-                                    <input type="file" name={`certificate_file_${index}`} onChange={(e) => handleUpdateCertificateChange(index, 'file', e.target)} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
-                                    {cert.existingFile && <div className="text-xs text-gray-500 mt-1">Current: {cert.existingFile}</div>}
+
+                                {/* File */}
+                                <div className="md:col-span-2">
+                                    <label className="text-xs text-gray-500 dark:text-gray-300">
+                                        File
+                                    </label>
+                                    <input
+                                        type="file"
+                                        onChange={(e) =>
+                                            handleUpdateCertificateChange(index, 'file', e.target)
+                                        }
+                                        className="w-full text-sm"
+                                    />
+                                    {cert.existingFile && (
+                                        <p className="text-[10px] text-gray-500 truncate">
+                                            {cert.existingFile}
+                                        </p>
+                                    )}
                                 </div>
-                                <button type="button" onClick={() => handleUpdateCertificateRemove(index)} className="px-3 py-2 text-white bg-red-500 rounded hover:bg-red-600">X</button>
+
+                                {/* Remove */}
+                                <div className="flex items-end justify-end">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleUpdateCertificateRemove(index)}
+                                        className="px-2 py-1 text-xs bg-red-500 text-white rounded"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
                             </div>
                         ))}
-                        <button type="button" onClick={handleUpdateCertificateAdd} className="mt-2 px-4 py-2 text-sm text-indigo-600 bg-indigo-100 rounded hover:bg-indigo-200">+ Add Certificate</button>
+
+                        <button
+                            type="button"
+                            onClick={handleUpdateCertificateAdd}
+                            className="mt-1 text-xs px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200"
+                        >
+                            + Add Certificate
+                        </button>
                     </div>
 
-                    <div className="mt-8 flex justify-end gap-4">
+
+                    <div className="sticky bottom-0 bg-white dark:bg-gray-800 border-t dark:border-gray-700 px-4 py-3 flex justify-end gap-3">
+
                         <button type="button" onClick={closeUpdateModal} className="px-6 py-2.5 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none font-semibold">Cancel</button>
                         <button type="submit" className="px-8 py-2.5 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500 font-semibold shadow-md">Update Employee</button>
                     </div>
