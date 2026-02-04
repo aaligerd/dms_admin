@@ -9,7 +9,7 @@ const Login = () => {
     useEffect(() => {
         const userEmpId = localStorage.getItem('user_emp_id');
         if (userEmpId) {
-            navigate('/dms/dashboard', { replace: true });
+            navigate('/dashboard', { replace: true });
         }
     }, [navigate]);
 
@@ -52,7 +52,7 @@ const Login = () => {
                 localStorage.setItem('user_name', result.data.user_name);
                 localStorage.setItem('user_role', result.data.role);
                 // Navigate to dashboard
-                navigate('/dms/dashboard');
+                navigate('/dashboard');
             } else {
                 setError(result.message || 'Login failed. Please check your credentials.');
             }

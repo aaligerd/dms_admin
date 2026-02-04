@@ -12,11 +12,10 @@ function App() {
     <Router>
       <div className="App font-sans text-gray-900 antialiased">
         <Routes>
-          <Route path="/" element={<Navigate to="/dms/login" replace />} />
-          <Route path="/dms" element={<Navigate to="/dms/login" replace />} />
-          <Route path="/dms/login" element={<Login />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
           <Route
-            path="/dms/dashboard"
+            path="/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
@@ -24,7 +23,7 @@ function App() {
             }
           />
           <Route
-            path="/dms/add-user"
+            path="/add-user"
             element={
               <ProtectedRoute>
                 <AddUser />
@@ -32,7 +31,7 @@ function App() {
             }
           />
           <Route
-            path="/dms/add-employee"
+            path="/add-employee"
             element={
               <ProtectedRoute>
                 <AddEmployee />
@@ -40,7 +39,7 @@ function App() {
             }
           />
           <Route
-            path="/dms/password-reset"
+            path="/password-reset"
             element={
               <ProtectedRoute>
                 <PasswordReset />
