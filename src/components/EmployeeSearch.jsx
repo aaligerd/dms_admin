@@ -86,7 +86,7 @@ const EmployeeSearch = () => {
         }
     };
 
-    const handleView = async (empId,org_id) => {
+    const handleView = async (empId, org_id) => {
         try {
             // Assuming endpoint to get single employee details
             const response = await fetch(`${API_BASE_URL}/employee/${empId}/${org_id}`);
@@ -495,7 +495,7 @@ const EmployeeSearch = () => {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                         <button
-                                                            onClick={() => handleView(emp.emp_id,emp.org_id)}
+                                                            onClick={() => handleView(emp.emp_id, emp.org_id)}
                                                             className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
                                                             View
                                                         </button>
@@ -543,11 +543,22 @@ const EmployeeSearch = () => {
             </Modal>
 
             {/* Update Modal */}
-            <Modal isOpen={isUpdateModalOpen} onClose={closeUpdateModal} title="Update Employee" maxWidth="w-[95vw] md:w-[90vw] lg:w-[85vw] xl:w-[80vw] max-w-none">
-                <form onSubmit={handleUpdateSubmit} className="flex flex-col h-[85vh]">
-                    <div className="flex-1 overflow-y-auto px-3 sm:px-4 py-3">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+            <Modal
+                isOpen={isUpdateModalOpen}
+                onClose={closeUpdateModal}
+                title="Update Employee"
+                maxWidth="w-[95vw] md:w-[90vw] lg:w-[85vw] xl:w-[80vw] max-w-none"
+            >
+                <form onSubmit={handleUpdateSubmit} className="flex flex-col h-[90vh]">
 
+                    {/* 🔒 FIXED HEADER SPACER (height matches modal header) */}
+                    <div className="shrink-0" />
+
+                    {/* 🔥 SINGLE SCROLLER (ONLY ON MOBILE) */}
+                    <div className="flex-1 overflow-y-auto  px-3 md:px-4 py-2 md:py-4 space-y-4">
+
+                        {/* ================= FORM FIELDS ================= */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
                             {/* Text/Number/Email/Date Fields */}
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Employee Name</label>
@@ -672,160 +683,120 @@ const EmployeeSearch = () => {
                                 <input type="text" name="bank_account_number" value={updateFormData.bank_account_number || ''} onChange={handleUpdateChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
                             </div>
                         </div>
-                    </div>
 
-                    {/* Marksheets Section */}
-                    <div className="mt-4">
-                        <h3 className="text-sm font-semibold text-gray-700 dark:text-white mb-2">
-                            Marksheets
-                        </h3>
+                        {/* ================= MARKSHEETS ================= */}
+                        <section className="space-y-2">
+                            <h3 className="text-sm font-semibold text-gray-700 dark:text-white">
+                                Marksheets
+                            </h3>
 
-                        {updateMarksheets.map((mark, index) => (
-                            <div
-                                key={index}
-                                className="
-                                grid grid-cols-1 md:grid-cols-5
-                                gap-2 mb-2
-                                border p-2 rounded-md
-                                bg-gray-50 dark:bg-gray-700
-                            "
+                            {updateMarksheets.map((mark, index) => (
+                                <div
+                                    key={index}
+                                    className="
+              grid grid-cols-1 md:grid-cols-5 gap-2
+              p-2 border rounded-md
+              bg-gray-50 dark:bg-gray-700
+            "
+                                >
+                                    <div className="md:col-span-2">
+                                        <label className="text-xs">Name</label>
+                                        <input
+                                            className="w-full px-2 py-1 text-xs rounded border"
+                                        />
+                                    </div>
+
+                                    <div className="md:col-span-2 flex flex-col">
+                                        <label className="text-xs mb-1">File</label>
+                                        <input
+                                            type="file"
+                                            className="text-xs h-8 file:h-8 file:px-2 file:text-xs"
+                                        />
+                                    </div>
+
+                                    <div className="flex items-end justify-end">
+                                        <button
+                                            type="button"
+                                            className="h-6 w-6 text-xs bg-red-500 text-white rounded"
+                                        >
+                                            ✕
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+
+                            <button
+                                type="button"
+                                className="text-xs px-3 py-1 bg-indigo-100 text-indigo-700 rounded"
                             >
-                                {/* Name */}
-                                <div className="md:col-span-2">
-                                    <label className="text-xs text-gray-500 dark:text-gray-300">
-                                        Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={mark.name}
-                                        onChange={(e) =>
-                                            handleUpdateMarksheetChange(index, 'name', e.target.value)
-                                        }
-                                        className="w-full px-2 py-1.5 text-sm rounded border dark:bg-gray-800"
-                                    />
+                                + Add Marksheet
+                            </button>
+                        </section>
+
+                        {/* ================= CERTIFICATES ================= */}
+                        <section className="space-y-2">
+                            <h3 className="text-sm font-semibold text-gray-700 dark:text-white">
+                                Certificates
+                            </h3>
+
+                            {updateCertificates.map((cert, index) => (
+                                <div
+                                    key={index}
+                                    className="
+              grid grid-cols-1 md:grid-cols-5 gap-2
+              p-2 border rounded-md
+              bg-gray-50 dark:bg-gray-700
+            "
+                                >
+                                    <div className="md:col-span-2">
+                                        <label className="text-xs">Name</label>
+                                        <input className="w-full px-2 py-1 text-xs rounded border" />
+                                    </div>
+
+                                    <div className="md:col-span-2 flex flex-col">
+                                        <label className="text-xs mb-1">File</label>
+                                        <input
+                                            type="file"
+                                            className="text-xs h-8 file:h-8 file:px-2 file:text-xs"
+                                        />
+                                    </div>
+
+                                    <div className="flex items-end justify-end">
+                                        <button
+                                            type="button"
+                                            className="h-6 w-6 text-xs bg-red-500 text-white rounded"
+                                        >
+                                            ✕
+                                        </button>
+                                    </div>
                                 </div>
+                            ))}
 
-                                {/* File */}
-                                <div className="md:col-span-2">
-                                    <label className="text-xs text-gray-500 dark:text-gray-300">
-                                        File
-                                    </label>
-                                    <input
-                                        type="file"
-                                        onChange={(e) =>
-                                            handleUpdateMarksheetChange(index, 'file', e.target.files[0])
-                                        }
-                                        className="w-full text-sm"
-                                    />
-                                    {mark.existingFile && (
-                                        <p className="text-[10px] text-gray-500 truncate">
-                                            {mark.existingFile}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Remove */}
-                                <div className="flex items-end justify-end">
-                                    <button
-                                        type="button"
-                                        onClick={() => handleUpdateMarksheetRemove(index)}
-                                        className="px-2 py-1 text-xs bg-red-500 text-white rounded"
-                                    >
-                                        ✕
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-
-                        <button
-                            type="button"
-                            onClick={handleUpdateMarksheetAdd}
-                            className="mt-1 text-xs px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200"
-                        >
-                            + Add Marksheet
-                        </button>
-                    </div>
-
-
-
-
-                    {/* Certificates Section */}
-                    <div className="mt-4">
-                        <h3 className="text-sm font-semibold text-gray-700 dark:text-white mb-2">
-                            Certificates
-                        </h3>
-
-                        {updateCertificates.map((cert, index) => (
-                            <div
-                                key={index}
-                                className="
-                                grid grid-cols-1 md:grid-cols-5
-                                gap-2 mb-2
-                                border p-2 rounded-md
-                                bg-gray-50 dark:bg-gray-700
-                            "
+                            <button
+                                type="button"
+                                className="text-xs px-3 py-1 bg-indigo-100 text-indigo-700 rounded"
                             >
-                                {/* Name */}
-                                <div className="md:col-span-2">
-                                    <label className="text-xs text-gray-500 dark:text-gray-300">
-                                        Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={cert.name}
-                                        onChange={(e) =>
-                                            handleUpdateCertificateChange(index, 'name', e.target.value)
-                                        }
-                                        className="w-full px-2 py-1.5 text-sm rounded border dark:bg-gray-800"
-                                    />
-                                </div>
+                                + Add Certificate
+                            </button>
+                        </section>
 
-                                {/* File */}
-                                <div className="md:col-span-2">
-                                    <label className="text-xs text-gray-500 dark:text-gray-300">
-                                        File
-                                    </label>
-                                    <input
-                                        type="file"
-                                        onChange={(e) =>
-                                            handleUpdateCertificateChange(index, 'file', e.target)
-                                        }
-                                        className="w-full text-sm"
-                                    />
-                                    {cert.existingFile && (
-                                        <p className="text-[10px] text-gray-500 truncate">
-                                            {cert.existingFile}
-                                        </p>
-                                    )}
-                                </div>
+                        {/* ================= ACTION BUTTONS ================= */}
+                        <div className="flex justify-end gap-3 pt-2">
+                            <button
+                                type="button"
+                                onClick={closeUpdateModal}
+                                className="px-4 py-2 text-sm bg-gray-200 rounded"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                className="px-5 py-2 text-sm bg-indigo-600 text-white rounded"
+                            >
+                                Update Employee
+                            </button>
+                        </div>
 
-                                {/* Remove */}
-                                <div className="flex items-end justify-end">
-                                    <button
-                                        type="button"
-                                        onClick={() => handleUpdateCertificateRemove(index)}
-                                        className="px-2 py-1 text-xs bg-red-500 text-white rounded"
-                                    >
-                                        ✕
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-
-                        <button
-                            type="button"
-                            onClick={handleUpdateCertificateAdd}
-                            className="mt-1 text-xs px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200"
-                        >
-                            + Add Certificate
-                        </button>
-                    </div>
-
-
-                    <div className="sticky bottom-0 bg-white dark:bg-gray-800 border-t dark:border-gray-700 px-4 py-3 flex justify-end gap-3">
-
-                        <button type="button" onClick={closeUpdateModal} className="px-6 py-2.5 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none font-semibold">Cancel</button>
-                        <button type="submit" className="px-8 py-2.5 text-white transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500 font-semibold shadow-md">Update Employee</button>
                     </div>
                 </form>
             </Modal>
