@@ -86,10 +86,10 @@ const EmployeeSearch = () => {
         }
     };
 
-    const handleView = async (empId) => {
+    const handleView = async (empId,org_id) => {
         try {
             // Assuming endpoint to get single employee details
-            const response = await fetch(`${API_BASE_URL}/employee/${empId}`);
+            const response = await fetch(`${API_BASE_URL}/employee/${empId}/${org_id}`);
             const result = await response.json();
             if (result.success || result.data) {
                 // Adjust based on actual API response structure for single employee
@@ -495,7 +495,7 @@ const EmployeeSearch = () => {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                         <button
-                                                            onClick={() => handleView(emp.emp_id)}
+                                                            onClick={() => handleView(emp.emp_id,emp.org_id)}
                                                             className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
                                                             View
                                                         </button>
