@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from './Modal';
+import DownloadButton from './DownloadButton';
 
 const EmployeeSearch = () => {
 
@@ -328,40 +329,73 @@ const EmployeeSearch = () => {
         if (field.type === 'file') {
             const url = data[`${field.name}_url`];
             return (
-                <div key={field.name} className="flex flex-col">
-                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
+                <div
+                    key={field.name}
+                    className="relative flex flex-col bg-gray-50 dark:bg-gray-800 border rounded-md p-3"
+                >
+                    <DownloadButton
+                        url={url}
+                        filename={value}
+                    />
+
+                    <label className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                        {field.label}
+                    </label>
+
                     {renderFilePreview(value, url)}
                 </div>
             );
         }
 
-        if (field.type === 'custom') { // For Marksheets and Certificates
+        if (field.type === 'custom') {
             let items = {};
             let urls = {};
+
             try {
                 items = typeof value === 'string' ? JSON.parse(value) : value || {};
                 const urlKey = `${field.name}_urls`;
                 urls = data[urlKey] || {};
-                // Ensure urls is an object, if API returns string parse it
-                if (typeof urls === 'string') {
-                    urls = JSON.parse(urls);
-                }
+                if (typeof urls === 'string') urls = JSON.parse(urls);
             } catch (e) {
                 console.error(`Error parsing ${field.name}`, e);
             }
 
             return (
-                <div key={field.name} className="mt-4 col-span-1 md:col-span-2 border-t pt-4">
-                    <h3 className="text-lg font-medium text-gray-700 dark:text-white mb-2">{field.label}</h3>
-                    {Object.entries(items).map(([itemName, filename], idx) => (
-                        <div key={idx} className="mb-4 border p-3 rounded">
-                            <p className="font-semibold text-sm text-gray-600 dark:text-gray-300">{itemName}</p>
-                            {renderFilePreview(filename, urls[itemName])}
-                        </div>
-                    ))}
-                    {Object.keys(items).length === 0 && <p className="text-sm text-gray-500">No {field.label.toLowerCase()} found.</p>}
+                <div
+                    key={field.name}
+                    className="col-span-1 md:col-span-2 border rounded-md p-4 bg-gray-50 dark:bg-gray-800"
+                >
+                    <h3 className="text-base font-semibold text-gray-700 dark:text-white mb-3">
+                        {field.label}
+                    </h3>
+
+                    <div className="space-y-3">
+                        {Object.entries(items).map(([itemName, filename], idx) => (
+                            <div
+                                key={idx}
+                                className="relative flex flex-col sm:flex-row sm:items-center gap-2 border rounded-md p-3 bg-white dark:bg-gray-900"
+                            >
+                                <DownloadButton
+                                    url={urls[itemName]}
+                                    filename={filename}
+                                />
+
+                                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                                    {itemName}
+                                </p>
+
+                                {renderFilePreview(filename, urls[itemName])}
+                            </div>
+                        ))}
+
+                        {Object.keys(items).length === 0 && (
+                            <p className="text-sm text-gray-500">
+                                No {field.label.toLowerCase()} found.
+                            </p>
+                        )}
+                    </div>
                 </div>
-            )
+            );
         }
 
         if (field.type === 'select') {
@@ -534,6 +568,7 @@ const EmployeeSearch = () => {
                             className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 px-3 py-2 sm:px-4 sm:py-3 max-h-[80vh] overflow-y-auto"
                         >
                             {masterArray.map((field) => renderField(field, selectedEmployee))}
+
                         </div>
 
                     </>
@@ -694,15 +729,20 @@ const EmployeeSearch = () => {
                                 <div
                                     key={index}
                                     className="
-              grid grid-cols-1 md:grid-cols-5 gap-2
-              p-2 border rounded-md
-              bg-gray-50 dark:bg-gray-700
-            "
+                                    grid grid-cols-1 md:grid-cols-5 gap-2
+                                    p-2 border rounded-md
+                                    bg-gray-50 dark:bg-gray-700
+                                    "
                                 >
                                     <div className="md:col-span-2">
                                         <label className="text-xs">Name</label>
                                         <input
                                             className="w-full px-2 py-1 text-xs rounded border"
+                                            value={mark.name}
+                                            name={`marksheet_name_${index}`}
+                                            onChange={(e) =>
+                                                handleUpdateMarksheetChange(index, "name", e.target.value)
+                                            }
                                         />
                                     </div>
 
@@ -711,12 +751,20 @@ const EmployeeSearch = () => {
                                         <input
                                             type="file"
                                             className="text-xs h-8 file:h-8 file:px-2 file:text-xs"
+                                            onChange={(e) =>
+                                                handleUpdateMarksheetChange(index, 'file', e.target)
+                                            }
+                                            name={`marksheet_file_${index}`}
                                         />
+                                        <p className="text-[10px] text-gray-500 truncate">
+                                            Current: {mark.existingFile}
+                                        </p>
                                     </div>
 
                                     <div className="flex items-end justify-end">
                                         <button
                                             type="button"
+                                            onClick={() => handleUpdateMarksheetRemove(index)}
                                             className="h-6 w-6 text-xs bg-red-500 text-white rounded"
                                         >
                                             ✕
@@ -727,6 +775,7 @@ const EmployeeSearch = () => {
 
                             <button
                                 type="button"
+                                onClick={handleUpdateMarksheetAdd}
                                 className="text-xs px-3 py-1 bg-indigo-100 text-indigo-700 rounded"
                             >
                                 + Add Marksheet
@@ -743,14 +792,17 @@ const EmployeeSearch = () => {
                                 <div
                                     key={index}
                                     className="
-              grid grid-cols-1 md:grid-cols-5 gap-2
-              p-2 border rounded-md
-              bg-gray-50 dark:bg-gray-700
-            "
+                                grid grid-cols-1 md:grid-cols-5 gap-2
+                                p-2 border rounded-md
+                                bg-gray-50 dark:bg-gray-700
+                                "
                                 >
                                     <div className="md:col-span-2">
                                         <label className="text-xs">Name</label>
-                                        <input className="w-full px-2 py-1 text-xs rounded border" />
+                                        <input className="w-full px-2 py-1 text-xs rounded border" name={`certificate_name_${index}`} value={cert.name}
+                                            onChange={(e) =>
+                                                handleUpdateCertificateChange(index, "name", e.target.value)
+                                            } />
                                     </div>
 
                                     <div className="md:col-span-2 flex flex-col">
@@ -758,12 +810,20 @@ const EmployeeSearch = () => {
                                         <input
                                             type="file"
                                             className="text-xs h-8 file:h-8 file:px-2 file:text-xs"
+                                            onChange={(e) =>
+                                                handleUpdateCertificateChange(index, 'file', e.target)
+                                            }
+                                            name={`certificate_file_${index}`}
                                         />
+                                        <p className="text-[10px] text-gray-500 truncate">
+                                            Current: {cert.existingFile}
+                                        </p>
                                     </div>
 
                                     <div className="flex items-end justify-end">
                                         <button
                                             type="button"
+                                            onClick={() => handleUpdateCertificateRemove(index)}
                                             className="h-6 w-6 text-xs bg-red-500 text-white rounded"
                                         >
                                             ✕
@@ -774,6 +834,7 @@ const EmployeeSearch = () => {
 
                             <button
                                 type="button"
+                                onClick={handleUpdateCertificateAdd}
                                 className="text-xs px-3 py-1 bg-indigo-100 text-indigo-700 rounded"
                             >
                                 + Add Certificate
@@ -781,17 +842,17 @@ const EmployeeSearch = () => {
                         </section>
 
                         {/* ================= ACTION BUTTONS ================= */}
-                        <div className="flex justify-end gap-3 pt-2">
+                        <div className="flex justify-end gap-3 pt-1">
                             <button
                                 type="button"
                                 onClick={closeUpdateModal}
-                                className="px-4 py-2 text-sm bg-gray-200 rounded"
+                                className="px-2 py-2 text-sm bg-gray-200 rounded"
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                className="px-5 py-2 text-sm bg-indigo-600 text-white rounded"
+                                className="px-4 py-2 text-sm bg-indigo-600 text-white rounded"
                             >
                                 Update Employee
                             </button>
