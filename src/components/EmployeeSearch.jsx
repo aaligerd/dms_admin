@@ -272,6 +272,13 @@ const EmployeeSearch = () => {
         { name: 'marksheets', label: 'Marksheets', type: 'custom' },
         { name: 'uan', label: 'UAN Number', type: 'text' },
         { name: 'offer_letter', label: 'Offer Letter', type: 'file' },
+
+        { name: 'appointment_letter', label: 'Appointment Letter', type: 'file', required: false },
+        { name: 'personal_details_form', label: 'Peronal Details Form', type: 'file', required: false },
+        { name: 'code_of_conduct', label: 'Code of Conduct', type: 'file', required: false },
+        { name: 'pf_form', label: 'PF Form', type: 'file', required: false },
+        { name: 'esic_form', label: 'ESIC Form', type: 'file', required: false },
+
         { name: 'old_org_name', label: 'Old Org Name', type: 'text' },
         { name: 'old_company_release_letter', label: 'Old Company Release Letter', type: 'file' },
         { name: 'old_pay_slip', label: 'Old Pay Slip', type: 'file' },
@@ -328,6 +335,7 @@ const EmployeeSearch = () => {
 
         if (field.type === 'file') {
             const url = data[`${field.name}_url`];
+            console.log(field.name,url);
             return (
                 <div
                     key={field.name}
@@ -667,6 +675,42 @@ const EmployeeSearch = () => {
                                 <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">UAN Number</label>
                                 <input type="text" name="uan" value={updateFormData.uan || ''} onChange={handleUpdateChange} pattern="[0-9]{12}" maxLength="12" title="UAN must be exactly 12 digits" className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
                             </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Offer Letter</label>
+                                <input type="file" name="offer_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.offer_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.offer_letter}</div>}
+                            </div>
+
+
+
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Appointment Letter Letter</label>
+                                <input type="file" name="offer_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.appointment_letter && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.appointment_letter}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Personal Details Form</label>
+                                <input type="file" name="offer_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.personal_details_form && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.personal_details_form}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Code of conduct</label>
+                                <input type="file" name="offer_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.code_of_conduct && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.code_of_conduct}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">PF Form</label>
+                                <input type="file" name="offer_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.pf_form && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.pf_form}</div>}
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">ESIC Form</label>
+                                <input type="file" name="offer_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                {selectedEmployee?.esic_form && <div className="text-xs text-gray-500 mt-1">Current: {selectedEmployee.esic_form}</div>}
+                            </div>
+
+
+
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Offer Letter</label>
                                 <input type="file" name="offer_letter" onChange={handleUpdateFileChange} className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />

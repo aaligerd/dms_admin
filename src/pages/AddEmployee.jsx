@@ -77,6 +77,13 @@ const AddEmployee = () => {
         { name: 'marksheets', label: 'Marksheets', type: 'array', required: false },
         { name: 'uan_number', label: 'UAN Number', type: 'text', required: false },
         { name: 'offer_letter', label: 'Offer Letter', type: 'file', required: false },
+
+        { name: 'appointment_letter', label: 'Appointment Letter', type: 'file', required: false },
+        { name: 'personal_details_form', label: 'Peronal Details Form', type: 'file', required: false },
+        { name: 'code_of_conduct', label: 'Code of Conduct', type: 'file', required: false },
+        { name: 'pf_form', label: 'PF Form', type: 'file', required: false },
+        { name: 'esic_form', label: 'ESIC Form', type: 'file', required: false },
+
         { name: 'old_org_name', label: 'Old Org Name', type: 'text', required: false },
         { name: 'old_comapny_release_letter', label: 'Old Company Release Letter', type: 'file', required: false },
         { name: 'old_pay_slip', label: 'Old Pay Slip', type: 'file', required: false },
