@@ -609,7 +609,7 @@ const EmployeeSearch = () => {
                             </div>
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Employee Org ID</label>
-                                <input type="text" name="emp_org_id" value={updateFormData.emp_org_id || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" />
+                                <input type="text" name="emp_org_id" value={updateFormData.emp_org_id || ''} onChange={handleUpdateChange} required className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring" disabled/>
                             </div>
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Organisation</label>
