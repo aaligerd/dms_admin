@@ -6,6 +6,9 @@ import AddEmployee from './pages/AddEmployee';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import PasswordReset from './pages/PasswordReset';
+import AddNewEmployee from './pages/AddNewEmployee';
+import SetInterview from './pages/SetInterview';
+import EmployeeTable from './pages/EmployeeTable';
 
 function App() {
   return (
@@ -43,6 +46,32 @@ function App() {
             element={
               <ProtectedRoute>
                 <PasswordReset />
+              </ProtectedRoute>
+            }
+          />
+
+
+          <Route
+            path="add-newemployee"
+            element={
+              <ProtectedRoute>
+                <AddNewEmployee />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/set-interview"
+            element={
+              <ProtectedRoute>
+                <SetInterview />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/employee-table"
+            element={
+              <ProtectedRoute>
+                <EmployeeTable />
               </ProtectedRoute>
             }
           />
