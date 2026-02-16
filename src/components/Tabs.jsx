@@ -13,7 +13,7 @@ const Tabs = () => {
 
   return (
     <div className="mt-4 border-b border-gray-300 dark:border-gray-700">
-      <div className="flex gap-8 text-sm font-semibold">
+      <div className="ml-7 lg:ml-0 flex gap-6 lg:gap-8 text-sm font-semibold">
         {tabs.map((tab) => {
           const isActive = location.pathname === tab.path;
 

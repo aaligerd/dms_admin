@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PasswordReset from './pages/PasswordReset';
 import AddNewEmployee from './pages/AddNewEmployee';
 import SetInterview from './pages/SetInterview';
+import EmployeeTable from './pages/EmployeeTable';
 
 function App() {
   return (
@@ -63,6 +64,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <SetInterview />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/employee-table"
+            element={
+              <ProtectedRoute>
+                <EmployeeTable />
               </ProtectedRoute>
             }
           />
