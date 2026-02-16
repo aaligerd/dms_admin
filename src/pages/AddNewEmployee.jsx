@@ -288,14 +288,14 @@ const AddNewEmployee = () => {
 
                 <main className="flex-1 overflow-y-auto p-6">
                     <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
-                        Add Employee
+                        Add Candidate
                     </h1>
                     <div className="w-full max-w-lg mx-auto mt-10">
                         <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden">
 
                             <div className="p-6 bg-indigo-600">
                                 <h2 className="text-2xl font-bold text-white text-center">
-                                    Create New Employee
+                                    Add New Candidate
                                 </h2>
                             </div>
 

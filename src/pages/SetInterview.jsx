@@ -241,7 +241,7 @@ const SetInterview = () => {
               <input
                 type="text"
                 name="employee_code"
-                placeholder="Employee Code"
+                placeholder="Candidate Code"
                 required
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-indigo-300"

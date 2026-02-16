@@ -232,13 +232,13 @@ const EmployeeTable = () => {
                     <div className="w-full max-w-7xl lg:max-w-6xl bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8">
 
                         <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 dark:text-white">
-                            Employee List
+                            Candidate List
                         </h2>
 
                         <div className="mb-6 flex justify-center">
                             <input
                                 type="text"
-                                placeholder="Search by Name or Code"
+                                placeholder="Search Candidate by Name or Code"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 className="w-full max-w-md px-4 py-2 border rounded-md focus:ring focus:ring-indigo-300"
