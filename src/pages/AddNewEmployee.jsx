@@ -7,8 +7,7 @@ const AddNewEmployee = () => {
         name: "",
         phone: "",
         email: "",
-        position: "",
-        organization: "",
+        photo: null,
         cv: null,
     });
 
@@ -20,6 +19,14 @@ const AddNewEmployee = () => {
     const handleChange = (e) => {
         if (e.target.name === "cv") {
             setFormData({ ...formData, cv: e.target.files[0] });
+        } else {
+            setFormData({ ...formData, [e.target.name]: e.target.value });
+        }
+    };
+
+    const handleChangephoto = (e) => {
+        if (e.target.name === "photo") {
+            setFormData({ ...formData, photo: e.target.files[0] });
         } else {
             setFormData({ ...formData, [e.target.name]: e.target.value });
         }
@@ -115,10 +122,10 @@ const AddNewEmployee = () => {
 
                                     <input
                                         type="file"
-                                        name="cv"
-                                        accept=".pdf,.doc,.docx"
+                                        name="photo"
+                                        accept=".pdf,.doc,.docx,.jpg,.png,.avif"
                                         required
-                                        onChange={handleChange}
+                                        onChange={handleChangephoto}
                                         className="block w-full text-sm text-gray-700 
                                         file:mr-4 file:py-2 file:px-4 
                                         file:rounded-md file:border-0 
