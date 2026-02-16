@@ -9,6 +9,7 @@ import PasswordReset from './pages/PasswordReset';
 import AddNewEmployee from './pages/AddNewEmployee';
 import SetInterview from './pages/SetInterview';
 import EmployeeTable from './pages/EmployeeTable';
+import SendEmail from './pages/SendEmail';
 
 function App() {
   return (
@@ -52,7 +53,7 @@ function App() {
 
 
           <Route
-            path="add-newemployee"
+            path="add-newcandidate"
             element={
               <ProtectedRoute>
                 <AddNewEmployee />
@@ -68,10 +69,18 @@ function App() {
             }
           />
            <Route
-            path="/employee-table"
+            path="/candidate-table"
             element={
               <ProtectedRoute>
                 <EmployeeTable />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/send-email"
+            element={
+              <ProtectedRoute>
+                <SendEmail />
               </ProtectedRoute>
             }
           />
