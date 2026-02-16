@@ -147,70 +147,46 @@
 //               />
 //             </div>
 
-//             {/* Position */}
-//             <div className="mb-6">
-//               <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
-//                 Position
-//               </label>
-//               <input
-//                 type="text"
-//                 name="position"
-//                 value={formData.position}
-//                 onChange={handleChange}
-//                 required
-//                 placeholder="Enter position"
-//                 className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md 
-//                 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 
-//                 focus:border-indigo-500 dark:focus:border-indigo-500 
-//                 focus:outline-none focus:ring"
-//               />
-//             </div>
+//   <div className="mb-6">
+//       <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+//         Upload CV
+//       </label>
 
-//             {/* Organization */}
-//             <div className="mb-6">
-//               <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
-//                 Organization
-//               </label>
-
-//               <select
-//                 name="organization"
-//                 value={formData.organization}
-//                 onChange={handleChange}
-//                 required
-//                 className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md 
-//                 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 
-//                 focus:border-indigo-500 dark:focus:border-indigo-500 
-//                 focus:outline-none focus:ring"
-//               >
-//                 <option value="">Select Organization</option>
-//                 {organizations.map((org) => (
-//                   <option key={org.id} value={org.id}>
-//                     {org.name}
-//                   </option>
-//                 ))}
-//               </select>
-//             </div>
+//       <input
+//         type="file"
+//         name="cv"
+//         accept=".pdf,.doc,.docx"
+//         required
+//         onChange={handleChange}
+//         className="block w-full text-sm text-gray-700 
+//         file:mr-4 file:py-2 file:px-4 
+//         file:rounded-md file:border-0 
+//         file:text-sm file:font-semibold 
+//         file:bg-indigo-600 file:text-white 
+//         hover:file:bg-indigo-500"
+//       />
+//     </div>
 
 //             {/* CV Upload */}
-//             <div className="mb-6">
-//               <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
-//                 Upload CV
-//               </label>
+// <div className="mb-6">
+//   <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+//     Upload CV
+//   </label>
 
-//               <input
-//                 type="file"
-//                 name="cv"
-//                 accept=".pdf,.doc,.docx"
-//                 required
-//                 onChange={handleChange}
-//                 className="block w-full text-sm text-gray-700 
-//                 file:mr-4 file:py-2 file:px-4 
-//                 file:rounded-md file:border-0 
-//                 file:text-sm file:font-semibold 
-//                 file:bg-indigo-600 file:text-white 
-//                 hover:file:bg-indigo-500"
-//               />
-//             </div>
+//   <input
+//     type="file"
+//     name="cv"
+//     accept=".pdf,.doc,.docx"
+//     required
+//     onChange={handleChange}
+//     className="block w-full text-sm text-gray-700 
+//     file:mr-4 file:py-2 file:px-4 
+//     file:rounded-md file:border-0 
+//     file:text-sm file:font-semibold 
+//     file:bg-indigo-600 file:text-white 
+//     hover:file:bg-indigo-500"
+//   />
+// </div>
 
 //             {/* Button */}
 //             <div className="mt-8 flex justify-center lg:justify-end">
@@ -287,10 +263,10 @@ const AddNewEmployee = () => {
                 </header>
 
                 <main className="flex-1 overflow-y-auto p-6">
-                    <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                    {/* <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
                         Add Candidate
-                    </h1>
-                    <div className="w-full max-w-lg mx-auto mt-10">
+                    </h1> */}
+                    <div className="w-full max-w-lg mx-auto">
                         <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden">
 
                             <div className="p-6 bg-indigo-600">
@@ -357,44 +333,22 @@ const AddNewEmployee = () => {
 
                                 <div className="mb-6">
                                     <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
-                                        Position
+                                        Upload Photo
                                     </label>
+
                                     <input
-                                        type="text"
-                                        name="position"
-                                        value={formData.position}
-                                        onChange={handleChange}
+                                        type="file"
+                                        name="cv"
+                                        accept=".pdf,.doc,.docx"
                                         required
-                                        placeholder="Enter position"
-                                        className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md 
-                                        dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 
-                                        focus:border-indigo-500 dark:focus:border-indigo-500 
-                                        focus:outline-none focus:ring"
+                                        onChange={handleChange}
+                                        className="block w-full text-sm text-gray-700 
+                                        file:mr-4 file:py-2 file:px-4 
+                                        file:rounded-md file:border-0 
+                                        file:text-sm file:font-semibold 
+                                        file:bg-indigo-600 file:text-white 
+                                        hover:file:bg-indigo-500"
                                     />
-                                </div>
-
-                                <div className="mb-6">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
-                                        Organization
-                                    </label>
-
-                                    <select
-                                        name="organization"
-                                        value={formData.organization}
-                                        onChange={handleChange}
-                                        required
-                                        className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md 
-                                        dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 
-                                        focus:border-indigo-500 dark:focus:border-indigo-500 
-                                        focus:outline-none focus:ring"
-                                    >
-                                        <option value="">Select Organization</option>
-                                        {organizations.map((org) => (
-                                            <option key={org.id} value={org.id}>
-                                                {org.name}
-                                            </option>
-                                        ))}
-                                    </select>
                                 </div>
 
                                 <div className="mb-6">
