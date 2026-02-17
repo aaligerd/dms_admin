@@ -51,15 +51,6 @@ function App() {
             }
           />
 
-
-          <Route
-            path="add-newcandidate"
-            element={
-              <ProtectedRoute>
-                <AddNewEmployee />
-              </ProtectedRoute>
-            }
-          />
           <Route
             path="/set-interview"
             element={
@@ -82,6 +73,13 @@ function App() {
               <ProtectedRoute>
                 <SendEmail />
               </ProtectedRoute>
+            }
+          />
+
+           <Route
+            path="/add-newcandidate/:tempcode"
+            element={
+                <AddNewEmployee />
             }
           />
         </Routes>

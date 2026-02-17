@@ -7,7 +7,7 @@ const Tabs = () => {
 
   const tabs = [
     { label: "Send Email", path: "/send-email" },
-    { label: "Add Candidate", path: "/add-newcandidate" },
+    // { label: "Add Candidate", path: "/add-newcandidate" },
     // { label: "Set Interview", path: "/set-interview" },
     { label: "Candidate Table", path: "/candidate-table" },
   ];
