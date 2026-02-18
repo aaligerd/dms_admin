@@ -75,9 +75,9 @@ const PasswordReset = () => {
                         <tbody>
                             {users.map((user) => (
                                 <tr key={user.id}>
-                                    <td className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200">{user.user_emp_code}</td>
-                                    <td className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200">{user.user_name}</td>
-                                    <td className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200">
+                                    <td className="px-4 py-2 text-sm text-left text-gray-700 dark:text-gray-200">{user.user_emp_code}</td>
+                                    <td className="px-4 py-2 text-sm text-left text-gray-700 dark:text-gray-200">{user.user_name}</td>
+                                    <td className="px-4 py-2 text-sm text-left text-gray-700 dark:text-gray-200">
                                         <button className="flex px-2 py-1 text-sm font-semibold text-white bg-blue-500 rounded hover:bg-blue-600" onClick={() => handleResetPassword(user.user_id)}>
                                             Reset <span className='ml-1 hidden lg:block md:block'>Password</span>
                                         </button>

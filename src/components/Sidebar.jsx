@@ -120,7 +120,7 @@ const Sidebar = () => {
         },
         {
             name: 'Secreening Candidate Details', path: '/send-email', icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mr-3" viewBox="0 0 14 14" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" viewBox="0 0 14 14" fill="currentColor">
                     <path
                         fillRule="evenodd"
                         clipRule="evenodd"
