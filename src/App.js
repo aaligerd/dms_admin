@@ -56,7 +56,7 @@ function App() {
           <Route
               path="/add-employee"
               element={
-                  <AddEmployee />
+                <AddEmployee />
               }
             />
 
