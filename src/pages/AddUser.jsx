@@ -104,7 +104,7 @@ const AddUser = () => {
 
                             <form onSubmit={handleSubmit} className="p-8">
                                 <div className="mb-6">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Username</label>
+                                    <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">Username</label>
                                     <input
                                         type="text"
                                         name="user_name"
@@ -117,7 +117,7 @@ const AddUser = () => {
                                 </div>
 
                                 <div className="mb-6">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Email Address</label>
+                                    <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">Email Address</label>
                                     <input
                                         type="email"
                                         name="user_mail"
@@ -130,7 +130,7 @@ const AddUser = () => {
                                 </div>
 
                                 <div className="mb-6">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Employee Code</label>
+                                    <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">Employee Code</label>
                                     <input
                                         type="text"
                                         name="user_emp_code"
@@ -143,7 +143,7 @@ const AddUser = () => {
                                 </div>
 
                                 <div className="mb-6">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                    <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                                         Organisation
                                     </label>
 
@@ -180,7 +180,7 @@ const AddUser = () => {
 
 
                                 <div className="mb-6">
-                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                    <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                                         Department
                                     </label>
 

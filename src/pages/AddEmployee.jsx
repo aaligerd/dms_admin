@@ -193,7 +193,7 @@ const AddEmployee = () => {
                                             }
                                             return (
                                                 <div key={index}>
-                                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
+                                                    <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
                                                     <input
                                                         type="text"
                                                         name={field.name}
@@ -219,7 +219,7 @@ const AddEmployee = () => {
                                             }
                                             return (
                                                 <div key={index}>
-                                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
+                                                    <label className="block mb-2 text-left text-sm font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
                                                     <input
                                                         type={inputType}
                                                         name={field.name}
@@ -235,7 +235,7 @@ const AddEmployee = () => {
                                         } else if (field.type === 'file') {
                                             return (
                                                 <div key={index}>
-                                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
+                                                    <label className="block mb-2 text-left text-sm font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
                                                     <input
                                                         type="file"
                                                         name={field.name}
@@ -248,7 +248,7 @@ const AddEmployee = () => {
                                         } else if (field.type === 'select') {
                                             return (
                                                 <div key={index} className="w-full">
-                                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                    <label className="block text-left mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
                                                         {field.label}
                                                     </label>
 
@@ -291,7 +291,7 @@ const AddEmployee = () => {
                                         } else if (field.type === 'date') {
                                             return (
                                                 <div key={index}>
-                                                    <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
+                                                    <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">{field.label}</label>
                                                     <input
                                                         type="date"
                                                         name={field.name}
@@ -322,7 +322,7 @@ const AddEmployee = () => {
                                         >
                                             {/* Marksheet Name */}
                                             <div className="w-full md:flex-1">
-                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                                                     Marksheet Name
                                                 </label>
                                                 <input
@@ -341,7 +341,7 @@ const AddEmployee = () => {
 
                                             {/* Marksheet File */}
                                             <div className="w-full md:flex-1">
-                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                                                     Marksheet File
                                                 </label>
                                                 <input
@@ -398,7 +398,7 @@ const AddEmployee = () => {
                                         >
                                             {/* Certificate Name */}
                                             <div className="w-full md:flex-1">
-                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                <label className="block mb-2 text-left text-sm font-medium text-gray-600 dark:text-gray-200">
                                                     Certificate Name
                                                 </label>
                                                 <input
@@ -417,7 +417,7 @@ const AddEmployee = () => {
 
                                             {/* Certificate File */}
                                             <div className="w-full md:flex-1">
-                                                <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                                <label className="block mb-2 text-left text-sm font-medium text-gray-600 dark:text-gray-200">
                                                     Upload File
                                                 </label>
                                                 <input
