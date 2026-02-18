@@ -134,7 +134,7 @@ const AddNewEmployee = () => {
 
                                 <div className="p-6 bg-indigo-600">
                                     <h2 className="text-2xl font-bold text-white text-center">
-                                        Add New Candidate
+                                        Candidate Details
                                     </h2>
                                 </div>
 

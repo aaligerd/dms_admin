@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import { FaUserPlus } from "react-icons/fa6";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 
@@ -164,16 +165,19 @@ const AddEmployee = () => {
             {/* <Sidebar /> */}
             <div className="flex-1 flex flex-col overflow-hidden">
                 <header className="flex justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
-                    <h1 className="text-2xl font-semibold text-gray-800 dark:text-white ml-9 lg:ml-0 md:ml-0">Add Employee</h1>
+                    <h1 className="flex items-center gap-2 text-2xl font-semibold text-gray-800 dark:text-white">
+                        <FaUserPlus className="text-indigo-600" size={25} />
+                        Add Employee
+                    </h1>
                 </header>
                 <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-gray-900 p-6">
-                    <div className="w-full max-w-3xl mx-auto mt-10">
+                    <div className="w-full max-w-3xl lg:max-w-5xl mx-auto mt-10">
                         <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden">
                             <div className="p-6 bg-indigo-600">
                                 <h2 className="text-2xl font-bold text-white text-center">Employee Details</h2>
                             </div>
                             <form onSubmit={handleSubmit} className="p-8">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {masterArray.map((field, index) => {
                                         if (field.type === 'text') {
                                             // Validation patterns
