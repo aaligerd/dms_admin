@@ -141,7 +141,7 @@ const AddNewEmployee = () => {
                                 <form onSubmit={handleSubmit} className="p-8">
 
                                     <div className="mb-6">
-                                        <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                        <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                                             Full Name
                                         </label>
                                         <input
@@ -159,7 +159,7 @@ const AddNewEmployee = () => {
                                     </div>
 
                                     <div className="mb-6">
-                                        <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                        <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                                             Phone Number
                                         </label>
                                         <input
@@ -177,7 +177,7 @@ const AddNewEmployee = () => {
                                     </div>
 
                                     <div className="mb-6">
-                                        <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                        <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                                             Upload Photo
                                         </label>
 
@@ -226,7 +226,7 @@ const AddNewEmployee = () => {
 
 
                                     <div className="mb-6">
-                                        <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                                        <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                                             Upload CV
                                         </label>
 
