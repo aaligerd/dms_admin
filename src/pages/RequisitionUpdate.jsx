@@ -90,14 +90,14 @@ const RequisitionUpdate = () => {
       const result = await res.json();
 
       if (res.ok) {
-        alert("Requisition Updated Successfully!");
+        alert("✅Requisition Updated Successfully!");
         navigate("/requisition");
       } else {
-        alert(result.message || "Update failed");
+        alert(result.message || "⚠️Update failed");
       }
     } catch (err) {
       console.error("Update Error:", err);
-      alert("Server Error");
+      alert("⚠️Server Error");
     } finally {
       setUpdating(false);
     }
@@ -129,7 +129,7 @@ const RequisitionUpdate = () => {
             onClick={() => navigate("/requisition")}
             className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700"
           >
-            Back to List
+           ⬅️ Back to List
           </button>
         </header>
 

@@ -71,13 +71,13 @@ const RequisitionForm = () => {
       });
 
       if (res.ok) {
-        alert("Requisition submitted successfully");
+        alert("✅Requisition submitted successfully");
         setFormData({});
       } else {
-        alert("Submission failed");
+        alert("⚠️Submission failed");
       }
     } catch (err) {
-      alert("Server Error");
+      alert("⚠️Server Error");
     }
   };
 
