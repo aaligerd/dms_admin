@@ -69,11 +69,13 @@ function App() {
             }
           />
 
-          <Route path="/requisition" element={<RequisitionList />} />
-        <Route
-          path="/requisition/update/:id"
-          element={<RequisitionUpdate />}
-        />
+          <Route path="/requisition" 
+          element={
+          <ProtectedRoute><RequisitionList /></ProtectedRoute>} />
+          <Route
+            path="/requisition/update/:id"
+            element={<ProtectedRoute><RequisitionUpdate /></ProtectedRoute>}
+          />
       </div>
     </Router>
   );
