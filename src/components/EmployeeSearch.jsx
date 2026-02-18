@@ -446,7 +446,7 @@ const EmployeeSearch = () => {
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                         {/* Filters */}
                         <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Organisation</label>
+                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200 text-left">Organisation</label>
                             <select
                                 value={selectedOrg}
                                 onChange={(e) => setSelectedOrg(e.target.value)}
@@ -458,7 +458,7 @@ const EmployeeSearch = () => {
                             </select>
                         </div>
                         <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Department</label>
+                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200 text-left">Department</label>
                             <select
                                 value={selectedDept}
                                 onChange={(e) => setSelectedDept(e.target.value)}
@@ -471,7 +471,7 @@ const EmployeeSearch = () => {
                         </div>
 
                         <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">Employee Org ID</label>
+                            <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200 text-left">Employee Org ID</label>
                             <input
                                 type="text"
                                 placeholder="E.g. E382"

@@ -101,7 +101,7 @@ const SendEmail = () => {
               <form onSubmit={handleSubmit} className="p-5 sm:p-8">
 
                 <div className="mb-6">
-                  <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                  <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                     Email Address
                   </label>
                   <input
@@ -116,7 +116,7 @@ const SendEmail = () => {
                 </div>
 
                 <div className="mb-6">
-                  <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
+                  <label className="block mb-2 text-sm text-left font-medium text-gray-600 dark:text-gray-200">
                     Position
                   </label>
 
