@@ -18,17 +18,26 @@ const RequisitionForm = () => {
       try {
         // Organisations
         const orgRes = await fetch(`${API_BASE_URL}/org`);
-        const orgData = await orgRes.json();
-        if (Array.isArray(orgData.data)) setOrganisations(orgData.data);
+        const orgData = await orgRes.json();   // ✅ define first
+        console.log(orgData);                  // ✅ then use
+
+        if (Array.isArray(orgData.data)) {
+          setOrganisations(orgData.data);
+        }
 
         // Departments
         const deptRes = await fetch(`${API_BASE_URL}/dept`);
         const deptData = await deptRes.json();
-        if (Array.isArray(deptData.data)) setDepartments(deptData.data);
+        console.log(deptData);
 
-        // ✅ Positions
-        const posRes = await fetch(`${API_BASE_URL}/get/position`);
+        if (Array.isArray(deptData.data)) {
+          setDepartments(deptData.data);
+        }
+
+        // Positions
+        const posRes = await fetch(`${API_BASE_URL}/requisition/get/position`);
         const posData = await posRes.json();
+        console.log('position:'+posData);
 
         if (Array.isArray(posData.data)) {
           setPositions(posData.data);
@@ -44,6 +53,7 @@ const RequisitionForm = () => {
     fetchData();
   }, []);
 
+
   /* ================= HANDLE CHANGE ================= */
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,7 +64,7 @@ const RequisitionForm = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${API_BASE_URL}/requisition`, {
+      const res = await fetch(`${API_BASE_URL}/requisition/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -108,7 +118,16 @@ const RequisitionForm = () => {
                 {/* ✅ POSITION DROPDOWN */}
                 <div>
                   <label className="label">Position</label>
-                  <select
+                  <input
+                    type="text"
+                    name="req_pos_title"
+                    value={formData.req_pos_title || ""}
+                    onChange={handleChange}
+                    className="input"
+                    required
+                  />
+
+                  {/* <select
                     name="req_pos_title"
                     value={formData.req_pos_title || ""}
                     onChange={handleChange}
@@ -124,7 +143,7 @@ const RequisitionForm = () => {
                         {pos.position_name || pos.name}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
                 </div>
 
                 {/* Organisation */}
