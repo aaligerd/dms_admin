@@ -161,7 +161,7 @@ const AddEmployee = () => {
 
     return (
         <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
-            <Sidebar />
+            {/* <Sidebar /> */}
             <div className="flex-1 flex flex-col overflow-hidden">
                 <header className="flex justify-between items-center py-4 px-6 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
                     <h1 className="text-2xl font-semibold text-gray-800 dark:text-white ml-9 lg:ml-0 md:ml-0">Add Employee</h1>
