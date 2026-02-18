@@ -6,6 +6,9 @@ import AddEmployee from './pages/AddEmployee';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import PasswordReset from './pages/PasswordReset';
+import RequisitionList from "./pages/RequisitionList";
+import RequisitionUpdate from "./pages/RequisitionUpdate";
+import RequisitionForm from "./pages/RequisitionForm";
 
 function App() {
   return (
@@ -47,6 +50,30 @@ function App() {
             }
           />
         </Routes>
+
+        <Route
+            path="/add-employee"
+            element={
+              <ProtectedRoute>
+                <AddEmployee />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/add-requisition"
+            element={
+              <ProtectedRoute>
+                <RequisitionForm />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/requisition" element={<RequisitionList />} />
+        <Route
+          path="/requisition/update/:id"
+          element={<RequisitionUpdate />}
+        />
       </div>
     </Router>
   );
