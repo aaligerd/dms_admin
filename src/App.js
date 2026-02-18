@@ -49,16 +49,16 @@ function App() {
               </ProtectedRoute>
             }
           />
-        </Routes>
+        
 
-        <Route
-            path="/add-employee"
-            element={
-              <ProtectedRoute>
-                <AddEmployee />
-              </ProtectedRoute>
-            }
-          />
+          <Route
+              path="/add-employee"
+              element={
+                <ProtectedRoute>
+                  <AddEmployee />
+                </ProtectedRoute>
+              }
+            />
 
           <Route
             path="/add-requisition"
@@ -71,11 +71,13 @@ function App() {
 
           <Route path="/requisition" 
           element={
-          <ProtectedRoute><RequisitionList /></ProtectedRoute>} />
+          <ProtectedRoute><RequisitionList /></ProtectedRoute>} 
+          />
           <Route
             path="/requisition/update/:id"
             element={<ProtectedRoute><RequisitionUpdate /></ProtectedRoute>}
           />
+        </Routes>
       </div>
     </Router>
   );
