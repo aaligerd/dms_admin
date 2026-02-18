@@ -94,9 +94,17 @@ const RequisitionForm = () => {
           </h1>
           <button
             onClick={() => navigate("/requisition")}
-            className="bg-indigo-600 text-white px-5 py-2 rounded-lg shadow hover:bg-indigo-700 transition duration-200"
+            className="flex items-center justify-center gap-2 
+             bg-indigo-600 text-white 
+             px-3 sm:px-4 md:px-5 py-2 
+             rounded-lg shadow hover:bg-indigo-700 
+             transition duration-200 text-sm sm:text-base"
           >
-            📃Requisition List
+            <span className="text-lg">📃</span>
+
+            <span className="hidden lg:inline md:hidden">
+              Requisition List
+            </span>
           </button>
         </header>
 
