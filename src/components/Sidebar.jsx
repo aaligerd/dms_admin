@@ -204,7 +204,7 @@ const Sidebar = () => {
                 ☰
             </button>
             <div
-                className={`fixed md:static top-0 left-0 z-50 h-screen w-64
+                className={`fixed md:static top-0 left-0 z-50 h-screen w-70
                 bg-white border-r dark:bg-gray-900 dark:border-gray-700
                 transform transition-transform duration-300
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'}
