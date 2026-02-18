@@ -9,6 +9,9 @@ import PasswordReset from './pages/PasswordReset';
 import RequisitionList from "./pages/RequisitionList";
 import RequisitionUpdate from "./pages/RequisitionUpdate";
 import RequisitionForm from "./pages/RequisitionForm";
+import AddNewEmployee from './pages/AddNewEmployee';
+import SendEmail from './pages/SendEmail';
+import EmployeeTable from './pages/EmployeeTable';
 
 function App() {
   return (
@@ -50,15 +53,37 @@ function App() {
             }
           />
         
-
           <Route
               path="/add-employee"
               element={
-                
                   <AddEmployee />
-                
               }
             />
+
+            <Route
+              path="/add-newcandidate/:tempcode"
+              element={
+                  <AddNewEmployee />
+              }
+            />
+
+            <Route
+            path="/send-email"
+            element={
+              <ProtectedRoute>
+                <SendEmail />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/candidate-table"
+            element={
+              <ProtectedRoute>
+                <EmployeeTable />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/add-requisition"
