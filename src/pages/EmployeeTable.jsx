@@ -82,8 +82,8 @@ const EmployeeTable = () => {
                             Candidate List
                         </h2>
 
-                        <div className="w-full flex justify-center px-4 mb-6">
-                            <div className="w-full max-w-3xl rounded-xl p-4 sm:p-6">
+                        <div className="w-full flex justify-center mb-6">
+                            <div className="w-full max-w-3xl rounded-xl">
 
                                 <div className="flex flex-col lg:flex-row gap-3">
 
@@ -96,17 +96,20 @@ const EmployeeTable = () => {
                                         className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
                                     />
 
-                                   <div className="flex flex-col lg:flex-row gap-3 w-full lg:w-auto">
+                                    <div className="flex flex-row lg:flex-row gap-3 w-full lg:w-auto">
+
                                         <button
                                             onClick={handleSearch}
-                                            className="w-full lg:w-auto bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition duration-200"
+                                            className="flex-1 lg:w-auto bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 
+                                            transition duration-200 lg:flex lg:items-center lg:justify-center lg:gap-2"
                                         >
-                                            🔍 Search
+                                            <span>🔍</span>
+                                            <span>Search</span>
                                         </button>
 
                                         <button
                                             onClick={handleClearFilters}
-                                            className="w-full lg:w-auto bg-gray-200 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-300 transition duration-200"
+                                            className="flex-1 lg:w-auto bg-gray-200 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-300 transition duration-200"
                                         >
                                             🔄 Clear
                                         </button>
