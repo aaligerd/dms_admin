@@ -9,6 +9,7 @@ const EmployeeTable = () => {
     const [actions, setActions] = useState({});
     const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [appliedSearch, setAppliedSearch] = useState("");
 
     const [employees] = useState([
         {
@@ -50,9 +51,18 @@ const EmployeeTable = () => {
 
     const filteredEmployees = employees.filter(
         (emp) =>
-            emp.name.toLowerCase().includes(search.toLowerCase()) ||
-            emp.code.toLowerCase().includes(search.toLowerCase())
+            emp.name.toLowerCase().includes(appliedSearch.toLowerCase()) ||
+            emp.code.toLowerCase().includes(appliedSearch.toLowerCase())
     );
+
+    const handleSearch = () => {
+        setAppliedSearch(search);
+    };
+
+    const handleClearFilters = () => {
+        setSearch("");
+        setAppliedSearch("");
+    };
 
     return (
         <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -72,14 +82,42 @@ const EmployeeTable = () => {
                             Candidate List
                         </h2>
 
-                        <div className="mb-6 flex justify-center">
-                            <input
-                                type="text"
-                                placeholder="Search Candidate by Name or Code"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                                className="w-full max-w-md px-4 py-2 border rounded-md focus:ring focus:ring-indigo-300"
-                            />
+                        <div className="w-full flex justify-center px-4 mb-6">
+                            <div className="w-full max-w-3xl rounded-xl p-4 sm:p-6">
+
+                                {/* SEARCH INPUT */}
+                                <div className="flex flex-col lg:flex-row gap-3">
+
+                                    <input
+                                        type="text"
+                                        placeholder="Search Candidate by Name or Code"
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                                        className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                                    />
+
+                                    {/* BUTTON GROUP */}
+                                   <div className="flex flex-col lg:flex-row gap-3 w-full lg:w-auto">
+                                        <button
+                                            onClick={handleSearch}
+                                            className="w-full lg:w-auto bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition duration-200"
+                                        >
+                                            🔍 Search
+                                        </button>
+
+                                        <button
+                                            onClick={handleClearFilters}
+                                            className="w-full lg:w-auto bg-gray-200 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-300 transition duration-200"
+                                        >
+                                            🔄 Clear
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
 
                         <div className="overflow-x-auto border border-black">

@@ -127,9 +127,9 @@ const RequisitionUpdate = () => {
 
           <button
             onClick={() => navigate("/requisition")}
-            className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700"
+            className="ml-1 bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700"
           >
-           ⬅️ Back to List
+           ⬅️ <span className="hidden lg:inline md:inline">Back to List</span>
           </button>
         </header>
 
