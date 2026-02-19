@@ -17,6 +17,7 @@ const AddNewEmployee = () => {
     const [photoLoading, setPhotoLoading] = useState(false);
     const [cvLoading, setCvLoading] = useState(false);
 
+
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     const [formData, setFormData] = useState({
@@ -45,11 +46,6 @@ const AddNewEmployee = () => {
         } else {
             setFormData({ ...formData, [e.target.name]: e.target.value });
         }
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // console.log(formData);
     };
 
     const uploadFile = async (file, type) => {
@@ -106,6 +102,50 @@ const AddNewEmployee = () => {
 
         checkTempCode();
     }, [tempcode]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!photoPath || !cvPath) {
+            alert("Please upload both Photo and CV before submitting.");
+            return;
+        }
+
+        try {
+            const payload = {
+                cname: formData.name,
+                phone: formData.phone,
+                photo: photoPath,
+                cv: cvPath,
+                temp_code: tempcode,
+            };
+
+            const response = await axios.post(
+                `${API_BASE_URL}/candidate/save`,
+                payload
+            );
+
+            if (response.data?.msg === "Data already updated.") {
+                alert("Data Already Submitted.");
+                return;
+            }
+
+            if (response.data) {
+                alert("Candidate saved successfully!");
+                // navigate("/");
+            }
+
+        } catch (error) {
+            console.error("Save failed:", error);
+
+            if (error.response?.data?.msg === "Data already updated.") {
+                alert("Data Already Submitted.");
+                return;
+            }
+
+            alert("Failed to save candidate.");
+        }
+    };
 
     if (!isValid) {
         return (
@@ -181,46 +221,49 @@ const AddNewEmployee = () => {
                                             Upload Photo
                                         </label>
 
-                                        <div className="flex items-center gap-3">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
 
                                             <div className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-800">
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
                                                     {formData.photo ? formData.photo.name : "No file chosen"}
                                                 </p>
                                             </div>
 
-                                            <input
-                                                type="file"
-                                                name="photo"
-                                                accept=".jpg,.png,.avif"
-                                                onChange={handleChangephoto}
-                                                className="hidden"
-                                                id="photoUpload"
-                                            />
+                                            <div className="flex gap-3 w-full sm:w-auto">
 
-                                            <label
-                                                htmlFor="photoUpload"
-                                                className="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-md cursor-pointer hover:bg-indigo-500 transition"
-                                            >
-                                                Choose
-                                            </label>
+                                                <input
+                                                    type="file"
+                                                    name="photo"
+                                                    accept=".jpg,.png,.avif"
+                                                    onChange={handleChangephoto}
+                                                    className="hidden"
+                                                    id="photoUpload"
+                                                />
 
-                                            <button
-                                                type="button"
-                                                disabled={!formData.photo || photoLoading}
-                                                onClick={async () => {
-                                                    setPhotoLoading(true);
-                                                    await uploadFile(formData.photo, "photo");
-                                                    setPhotoLoading(false);
-                                                }}
-                                                className={`px-4 py-2 text-sm font-semibold rounded-md text-white transition
-                                                        ${photoUploaded ? "bg-green-600" : "bg-red-600 hover:bg-red-500"}
-                                                        ${(!formData.photo || photoLoading) && "opacity-50 cursor-not-allowed"}
+                                                <label
+                                                    htmlFor="photoUpload"
+                                                    className="flex-1 sm:flex-none text-center px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-md cursor-pointer hover:bg-indigo-500 transition"
+                                                >
+                                                    Choose
+                                                </label>
+
+                                                <button
+                                                    type="button"
+                                                    disabled={!formData.photo || photoLoading}
+                                                    onClick={async () => {
+                                                        setPhotoLoading(true);
+                                                        await uploadFile(formData.photo, "photo");
+                                                        setPhotoLoading(false);
+                                                    }}
+                                                    className={`flex-1 sm:flex-none px-4 py-2 text-sm font-semibold rounded-md text-white transition
+                                                    ${photoUploaded ? "bg-green-600" : "bg-red-600 hover:bg-red-500"}
+                                                    ${(!formData.photo || photoLoading) && "opacity-50 cursor-not-allowed"}
                                                     `}
-                                            >
-                                                {photoLoading ? "Uploading..." : photoUploaded ? "Uploaded" : "Add"}
-                                            </button>
+                                                >
+                                                    {photoLoading ? "Uploading..." : photoUploaded ? "Uploaded" : "Add"}
+                                                </button>
 
+                                            </div>
                                         </div>
                                     </div>
 
@@ -230,46 +273,49 @@ const AddNewEmployee = () => {
                                             Upload CV
                                         </label>
 
-                                        <div className="flex items-center gap-3">
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
 
                                             <div className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-800">
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
                                                     {formData.cv ? formData.cv.name : "No file chosen"}
                                                 </p>
                                             </div>
 
-                                            <input
-                                                type="file"
-                                                name="cv"
-                                                accept=".pdf,.doc,.docx"
-                                                onChange={handleChange}
-                                                className="hidden"
-                                                id="cvUpload"
-                                            />
+                                            <div className="flex gap-3 w-full sm:w-auto">
 
-                                            <label
-                                                htmlFor="cvUpload"
-                                                className="px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-md cursor-pointer hover:bg-indigo-500 transition"
-                                            >
-                                                Choose
-                                            </label>
+                                                <input
+                                                    type="file"
+                                                    name="cv"
+                                                    accept=".pdf,.doc,.docx"
+                                                    onChange={handleChange}
+                                                    className="hidden"
+                                                    id="cvUpload"
+                                                />
 
-                                            <button
-                                                type="button"
-                                                disabled={!formData.cv || cvLoading}
-                                                onClick={async () => {
-                                                    setCvLoading(true);
-                                                    await uploadFile(formData.cv, "cv");
-                                                    setCvLoading(false);
-                                                }}
-                                                className={`px-4 py-2 text-sm font-semibold rounded-md text-white transition
-                                                        ${cvUploaded ? "bg-green-600" : "bg-red-600 hover:bg-red-500"}
-                                                        ${(!formData.cv || cvLoading) && "opacity-50 cursor-not-allowed"}
+                                                <label
+                                                    htmlFor="cvUpload"
+                                                    className="flex-1 sm:flex-none text-center px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-md cursor-pointer hover:bg-indigo-500 transition"
+                                                >
+                                                    Choose
+                                                </label>
+
+                                                <button
+                                                    type="button"
+                                                    disabled={!formData.cv || cvLoading}
+                                                    onClick={async () => {
+                                                        setCvLoading(true);
+                                                        await uploadFile(formData.cv, "cv");
+                                                        setCvLoading(false);
+                                                    }}
+                                                    className={`flex-1 sm:flex-none px-4 py-2 text-sm font-semibold rounded-md text-white transition
+                                                    ${cvUploaded ? "bg-green-600" : "bg-red-600 hover:bg-red-500"}
+                                                    ${(!formData.cv || cvLoading) && "opacity-50 cursor-not-allowed"}
                                                     `}
-                                            >
-                                                {cvLoading ? "Uploading..." : cvUploaded ? "Uploaded" : "Add"}
-                                            </button>
+                                                >
+                                                    {cvLoading ? "Uploading..." : cvUploaded ? "Uploaded" : "Add"}
+                                                </button>
 
+                                            </div>
                                         </div>
                                     </div>
 
@@ -277,10 +323,13 @@ const AddNewEmployee = () => {
                                     <div className="mt-8 flex justify-center lg:justify-end">
                                         <button
                                             type="submit"
-                                            className="px-8 py-2.5 text-white transition-colors duration-300 transform 
-                                        bg-indigo-600 rounded-md hover:bg-indigo-500 
-                                        focus:outline-none focus:bg-indigo-500 
-                                        font-semibold shadow-md"
+                                            disabled={!photoUploaded || !cvUploaded}
+                                            className={`px-8 py-2.5 text-white font-semibold shadow-md rounded-md transition
+                                                    ${photoUploaded && cvUploaded
+                                                    ? "bg-indigo-600 hover:bg-indigo-500"
+                                                    : "bg-gray-400 cursor-not-allowed"
+                                                }
+                                            `}
                                         >
                                             Create Employee
                                         </button>
