@@ -13,7 +13,7 @@ const Tabs = () => {
   ];
 
   return (
-    <div className="mt-4 border-b border-gray-300 dark:border-gray-700">
+    <div className="ml-3 lg:ml-0 md:ml-0 mt-4 border-b border-gray-300 dark:border-gray-700">
       <div className="overflow-x-auto">
         <div className="ml-8 lg:ml-0 flex gap-6 lg:gap-8 text-sm font-semibold whitespace-nowrap">
           {tabs.map((tab) => {

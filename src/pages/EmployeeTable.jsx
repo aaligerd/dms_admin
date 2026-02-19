@@ -85,7 +85,6 @@ const EmployeeTable = () => {
                         <div className="w-full flex justify-center px-4 mb-6">
                             <div className="w-full max-w-3xl rounded-xl p-4 sm:p-6">
 
-                                {/* SEARCH INPUT */}
                                 <div className="flex flex-col lg:flex-row gap-3">
 
                                     <input
@@ -97,7 +96,6 @@ const EmployeeTable = () => {
                                         className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
                                     />
 
-                                    {/* BUTTON GROUP */}
                                    <div className="flex flex-col lg:flex-row gap-3 w-full lg:w-auto">
                                         <button
                                             onClick={handleSearch}
@@ -194,9 +192,7 @@ const EmployeeTable = () => {
                     onClose={() => setIsInterviewModalOpen(false)}
                 />
             </Modal>
-
         </div>
-
     )
 }
 

@@ -84,7 +84,7 @@ const SendEmail = () => {
       <Sidebar />
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="ml-2 lg:ml-0 py-4 px-4 sm:px-6 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
+        <header className="py-4 px-4 sm:px-6 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-sm">
           <Tabs />
         </header>
 

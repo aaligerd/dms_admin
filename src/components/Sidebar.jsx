@@ -202,10 +202,13 @@ const Sidebar = () => {
 
             <button
                 onClick={() => setIsOpen(true)}
-                className="md:hidden fixed top-4 left-4 z-50 p-2 bg-gray-900 text-white rounded-md"
+                className="md:hidden fixed top-3 left-3 z-50 flex items-center justify-center w-9 h-9
+                bg-black backdrop-blur-md text-white rounded-xl shadow-lg border border-gray-800
+                 active:scale-95 transition-all duration-200"
             >
-                ☰
+                <span className="text-xl">☰</span>
             </button>
+
             <div
                 className={`fixed md:static top-0 left-0 z-50 h-screen w-70
                 bg-white border-r dark:bg-gray-900 dark:border-gray-700
