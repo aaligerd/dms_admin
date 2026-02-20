@@ -188,6 +188,7 @@ const RequisitionList = () => {
                     <th className="px-4 py-3">Position</th>
                     <th className="px-4 py-3">Requested By</th>
                     <th className="px-4 py-3">Persons</th>
+                    <th className="px-4 py-3">Request Date</th>
                     <th className="px-4 py-3">Action</th>
                   </tr>
                 </thead>
@@ -213,6 +214,9 @@ const RequisitionList = () => {
                         </td>
                         <td className="px-4 py-3">
                           {item.req_person_need}
+                        </td>
+                         <td className="px-4 py-3">
+                          {item.req_date}
                         </td>
                         <td className="px-4 py-3">
                           <button
