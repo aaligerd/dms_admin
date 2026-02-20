@@ -132,7 +132,22 @@ const AddNewEmployee = () => {
 
             if (response.data) {
                 alert("Candidate saved successfully!");
-                // navigate("/");
+
+                setFormData({
+                    name: "",
+                    phone: "",
+                    photo: null,
+                    cv: null,
+                });
+
+                setPhotoUploaded(false);
+                setCvUploaded(false);
+
+                setPhotoPath(null);
+                setCvPath(null);
+
+                document.getElementById("photoUpload").value = "";
+                document.getElementById("cvUpload").value = "";
             }
 
         } catch (error) {

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Tabs from "../components/Tabs";
 import Modal from "../components/Modal";
 import SetInterview from "./SetInterview";
+import axios from "axios";
+import CandidateDetails from "./CandidateDetails";
+import { IoMdArrowDroprightCircle, IoMdArrowDropleftCircle } from "react-icons/io";
 
 const EmployeeTable = () => {
     const [search, setSearch] = useState("");
@@ -10,58 +13,86 @@ const EmployeeTable = () => {
     const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [appliedSearch, setAppliedSearch] = useState("");
+    const [employees, setEmployees] = useState([]);
+    const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+    const [selectedCandidate, setSelectedCandidate] = useState(null);
 
-    const [employees] = useState([
-        {
-            id: 1,
-            name: "Arka Roy",
-            code: "EMP001",
-            position: "Frontend Developer",
-            company: "Organization One",
-            department: "IT",
-            status: "Ongoing",
-            email: "arka@gmail.com",
-            phone_no: "9876543210"
-        },
-        {
-            id: 2,
-            name: "Deep Goswami",
-            code: "EMP002",
-            position: "Backend Developer",
-            company: "Organization Two",
-            department: "Finance",
-            status: "Ongoing",
-            email: "deep@gmail.com",
-            phone_no: "9632587410"
-        },
-    ]);
+    // ✅ Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+    useEffect(() => {
+        fetchCandidates();
+    }, []);
+
+    const fetchCandidates = async () => {
+        try {
+            const response = await axios.get(
+                `${API_BASE_URL}/candidate/`
+            );
+
+            const candidates = Array.isArray(response.data)
+                ? response.data
+                : response.data.data || [];
+
+            setEmployees(candidates);
+
+        } catch (error) {
+            console.error("Error fetching candidates:", error);
+            setEmployees([]);
+        }
+    };
 
     const handleAction = (id, emp, action) => {
         setActions((prev) => ({
             ...prev,
             [id]: action,
         }));
-        if (action === "Interview Scheduled") {
+
+        if (action === "See Details") {
+            setSelectedCandidate(emp);
+            setIsDetailsModalOpen(true);
+        }
+
+        else if (action === "Interview Scheduled") {
             setSelectedEmployee(emp);
             setIsInterviewModalOpen(true);
-        } else {
-            alert(`Employee ${emp.id} marked as ${action}`);
+        }
+
+        else {
+            alert(`Candidate ${emp.candidate_id} marked as ${action}`);
         }
     };
 
-    const filteredEmployees = employees.filter(
-        (emp) =>
-            emp.name.toLowerCase().includes(appliedSearch.toLowerCase()) ||
-            emp.code.toLowerCase().includes(appliedSearch.toLowerCase())
+    const filteredEmployees = Array.isArray(employees)
+        ? employees.filter(
+            (emp) =>
+                (emp.name || "").toLowerCase().includes(appliedSearch.toLowerCase()) ||
+                (emp.candidate_id || "").toLowerCase().includes(appliedSearch.toLowerCase())
+        )
+        : [];
+
+    // Pagination Logic
+    const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+    const currentEmployees = filteredEmployees.slice(
+        indexOfFirstItem,
+        indexOfLastItem
     );
 
     const handleSearch = () => {
         setAppliedSearch(search);
+        setCurrentPage(1); 
     };
 
     const handleClearFilters = () => {
         setSearch("");
         setAppliedSearch("");
+        setCurrentPage(1);
     };
 
     return (
@@ -75,7 +106,6 @@ const EmployeeTable = () => {
                 </header>
 
                 <main className="flex justify-center p-6">
-                    {/* flex-1 overflow-y-auto */}
                     <div className="w-full max-w-7xl lg:max-w-7xl bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8">
 
                         <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 dark:text-white lg:-ml-19">
@@ -125,36 +155,43 @@ const EmployeeTable = () => {
                             <table className="min-w-full text-sm text-left">
                                 <thead className="bg-indigo-600 text-white">
                                     <tr>
+                                        <th className="px-6 py-3">ID</th>
                                         <th className="px-6 py-3">Name</th>
-                                        <th className="px-6 py-3">Code</th>
-                                        <th className="px-6 py-3">Position</th>
-                                        <th className="px-6 py-3">Company</th>
-                                        <th className="px-6 py-3">Department</th>
-                                        <th className="px-6 py-3">Status</th>
                                         <th className="px-6 py-3">Email</th>
-                                        <th className="px-6 py-3">Phone No</th>
+                                        <th className="px-6 py-3">Phone</th>
+                                        <th className="px-6 py-3">Status</th>
                                         <th className="px-6 py-3 text-center">Actions</th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
-                                    {filteredEmployees.map((emp) => (
-                                        <tr key={emp.id} className="border-b hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                                            <td className="px-6 py-4">{emp.name}</td>
-                                            <td className="px-6 py-4">{emp.code}</td>
-                                            <td className="px-6 py-4">{emp.position}</td>
-                                            <td className="px-6 py-4">{emp.company}</td>
-                                            <td className="px-6 py-4">{emp.department}</td>
-                                            <td className="px-6 py-4">{emp.status}</td>
+                                    {currentEmployees.map((emp, index) => (
+                                        <tr key={index} className="border-b hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+
+                                            <td className="px-6 py-4">{emp.candidate_id}</td>
+                                            <td className="px-6 py-4">{emp.name || "-"}</td>
                                             <td className="px-6 py-4">{emp.email}</td>
-                                            <td className="px-6 py-4">{emp.phone_no}</td>
+                                            <td className="px-6 py-4">{emp.phone || "-"}</td>
+
+                                            <td className="px-6 py-4">
+                                                <span
+                                                    className={`font-semibold
+                                                    ${emp.status === "DATA UPDATED BY CANDIDATE"
+                                                            ? "text-green-600"
+                                                            : emp.status === "MAIL SEND TO CANDIDATE FOR CV UPLOAD"
+                                                                ? "text-yellow-500"
+                                                                : "text-gray-700 dark:text-gray-300"
+                                                        }`}
+                                                >
+                                                    {emp.status}
+                                                </span>
+                                            </td>
 
                                             <td className="px-6 py-4 text-center">
                                                 <select
-                                                    value={actions[emp.id] || ""}
+                                                    value={actions[emp.candidate_id] || ""}
                                                     onChange={(e) => {
                                                         if (e.target.value) {
-                                                            handleAction(emp.id, emp, e.target.value);
+                                                            handleAction(emp.candidate_id, emp, e.target.value);
                                                         }
                                                     }}
                                                     className="px-3 py-1 text-sm border rounded-md focus:ring focus:ring-indigo-300"
@@ -162,13 +199,23 @@ const EmployeeTable = () => {
                                                     <option value="" disabled>
                                                         Select Action
                                                     </option>
+
+                                                    {emp.status === "DATA UPDATED BY CANDIDATE" && (
+                                                        <option value="See Details">
+                                                            See Details
+                                                        </option>
+                                                    )}
+
                                                     <option value="Interview Scheduled">
                                                         Schedule Interview
                                                     </option>
+
                                                     <option value="Accepted">Accept</option>
                                                     <option value="Rejected">Reject</option>
+
                                                 </select>
                                             </td>
+
                                         </tr>
                                     ))}
                                 </tbody>
@@ -181,9 +228,52 @@ const EmployeeTable = () => {
                             )}
                         </div>
 
+                        {/* Pagination UI */}
+                        {totalPages > 1 && (
+                            <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
+
+                                <button
+                                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                    className="px-3 py-1 rounded disabled:opacity-50"
+                                >
+                                    <IoMdArrowDropleftCircle size={21} />
+                                </button>
+
+                                {Array.from({ length: totalPages }, (_, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => setCurrentPage(i + 1)}
+                                        className={`px-3 py-1 rounded ${
+                                            currentPage === i + 1
+                                                ? "bg-indigo-600 text-white"
+                                                : "bg-gray-200"
+                                        }`}
+                                    >
+                                        {i + 1}
+                                    </button>
+                                ))}
+
+                                <button
+                                    onClick={() =>
+                                        setCurrentPage((prev) =>
+                                            Math.min(prev + 1, totalPages)
+                                        )
+                                    }
+                                    disabled={currentPage === totalPages}
+                                    className="px-3 py-1 rounded disabled:opacity-50"
+                                >
+                                    <IoMdArrowDroprightCircle size={21} />
+                                </button>
+
+                            </div>
+                        )}
+
                     </div>
                 </main>
             </div>
+
+            {/* Interview Modal */}
             <Modal
                 isOpen={isInterviewModalOpen}
                 onClose={() => setIsInterviewModalOpen(false)}
@@ -191,12 +281,23 @@ const EmployeeTable = () => {
                 maxWidth="max-w-2xl"
             >
                 <SetInterview
-                    employeeCode={selectedEmployee?.code}
+                    employeeName={selectedEmployee?.name}
+                    employeeCode={selectedEmployee?.candidate_id}
                     onClose={() => setIsInterviewModalOpen(false)}
                 />
+            </Modal>
+
+            {/* Details Modal */}
+            <Modal
+                isOpen={isDetailsModalOpen}
+                onClose={() => setIsDetailsModalOpen(false)}
+                title="Candidate Details"
+                maxWidth="max-w-2xl"
+            >
+                <CandidateDetails candidate={selectedCandidate} />
             </Modal>
         </div>
     )
 }
 
-export default EmployeeTable
+export default EmployeeTable;
