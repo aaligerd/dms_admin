@@ -251,7 +251,7 @@ const RequisitionList = () => {
                             onClick={() =>
                               navigate(`/requisition-details/${item.req_id}`)
                             }
-                            className="bg-blue-500 text-white mx-1 px-4 py-1 rounded-md hover:bg-green-600"
+                            className="bg-blue-500 text-white mx-1 px-4 py-1 rounded-md hover:bg-blue-600"
                           >
                             📃Details
                           </button>
