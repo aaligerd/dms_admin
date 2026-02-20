@@ -225,6 +225,23 @@ const RequisitionUpdate = () => {
                   />
                 </div>
 
+                {/* Status */}
+              <div>
+                <label className="label">Status</label>
+                <select
+                  name="req_status"
+                  value={formData.req_status || ""}
+                  onChange={handleChange}
+                  className="input"
+                  required
+                >
+                  <option value="">Select Status</option>
+                  <option key="Open" value="open">Hiring Ongoing</option>
+                  <option key="Closed" value="closed">Hiring Complete</option>
+               
+                </select>
+              </div>
+
               </div>
 
               {/* req_pos_title, req_org, req_dept, req_reqst_by, req_person_need, req_reason, req_brif, req_status, req_id */}
@@ -252,6 +269,11 @@ const RequisitionUpdate = () => {
                   className="input"
                 />
               </div>
+
+
+              
+
+
 
               <div className="mt-8 flex justify-end">
                 <button

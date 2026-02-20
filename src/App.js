@@ -12,6 +12,7 @@ import RequisitionForm from "./pages/RequisitionForm";
 import AddNewEmployee from './pages/AddNewEmployee';
 import SendEmail from './pages/SendEmail';
 import EmployeeTable from './pages/EmployeeTable';
+import RequestDetails from "./pages/RequestDetails";
 
 function App() {
   return (
@@ -93,6 +94,8 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/requisition-details/:id" element={<RequestDetails />} />
 
           <Route path="/requisition" 
           element={

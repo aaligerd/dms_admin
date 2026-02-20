@@ -87,6 +87,18 @@ const RequisitionList = () => {
     setSelectedDept("");
     fetchRequisitions(); // reload all data
   };
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${day}-${month}-${year} ${hours}:${minutes}`;
+  };
 
 
   /* ================= UI ================= */
@@ -188,7 +200,7 @@ const RequisitionList = () => {
                     <th className="px-4 py-3">Position</th>
                     <th className="px-4 py-3">Requested By</th>
                     <th className="px-4 py-3">Persons</th>
-                    <th className="px-4 py-3">Request Date</th>
+                    <th className="px-4 py-3">Status</th>
                     <th className="px-4 py-3">Action</th>
                   </tr>
                 </thead>
@@ -215,17 +227,33 @@ const RequisitionList = () => {
                         <td className="px-4 py-3">
                           {item.req_person_need}
                         </td>
-                         <td className="px-4 py-3">
-                          {item.req_date}
+                        
+                        <td>
+                          <span
+                            className={`flex items-center justify-center w-full px-4 py-2 text-white  rounded-md ${
+                              item.req_status === "closed" ? "bg-red-600" : "bg-green-600"
+                            }`}
+                          >
+                            {item.req_status === "closed" ? "Hiring Complete" : "Hiring Ongoing"}
+                          </span>
                         </td>
                         <td className="px-4 py-3">
                           <button
                             onClick={() =>
                               navigate(`/requisition/update/${item.req_id}`)
                             }
-                            className="bg-green-500 text-white px-4 py-1 rounded-md hover:bg-green-600"
+                            className="bg-green-500 text-white mx-1 px-4 py-1 rounded-md hover:bg-green-600"
                           >
-                            📝Update
+                            📝Edit
+                          </button>
+
+                          <button
+                            onClick={() =>
+                              navigate(`/requisition-details/${item.req_id}`)
+                            }
+                            className="bg-blue-500 text-white mx-1 px-4 py-1 rounded-md hover:bg-green-600"
+                          >
+                            📃Details
                           </button>
                         </td>
                       </tr>
