@@ -1,17 +1,17 @@
 import React from "react";
 import DownloadButton from "../components/DownloadButton";
 
-const API_BASE_URL = process.env.REACT_APP_API_ASSET_URL;
+const API_ASSET_URL = process.env.REACT_APP_API_ASSET_URL;
 
 const CandidateDetails = ({ candidate }) => {
     if (!candidate) return null;
 
     const photoUrl = candidate.photo
-        ? `${API_BASE_URL}/static/candidate/${candidate.photo}`
+        ? `${API_ASSET_URL}/static/candidate/${candidate.photo}`
         : null;
 
     const cvUrl = candidate.cv
-        ? `${API_BASE_URL}/static/candidate/${candidate.cv}`
+        ? `${API_ASSET_URL}/static/candidate/${candidate.cv}`
         : null;
 
     return (
