@@ -46,10 +46,6 @@ const EmployeeTable = () => {
     };
 
     const handleAction = (id, emp, action) => {
-        setActions((prev) => ({
-            ...prev,
-            [id]: action,
-        }));
 
         if (action === "See Details") {
             setSelectedCandidate(emp);
@@ -64,6 +60,11 @@ const EmployeeTable = () => {
         else {
             alert(`Candidate ${emp.candidate_id} marked as ${action}`);
         }
+
+        setActions((prev) => ({
+            ...prev,
+            [id]: ""
+        }));
     };
 
     const filteredEmployees = Array.isArray(employees)
@@ -86,7 +87,7 @@ const EmployeeTable = () => {
 
     const handleSearch = () => {
         setAppliedSearch(search);
-        setCurrentPage(1); 
+        setCurrentPage(1);
     };
 
     const handleClearFilters = () => {
@@ -244,11 +245,10 @@ const EmployeeTable = () => {
                                     <button
                                         key={i}
                                         onClick={() => setCurrentPage(i + 1)}
-                                        className={`px-3 py-1 rounded ${
-                                            currentPage === i + 1
-                                                ? "bg-indigo-600 text-white"
-                                                : "bg-gray-200"
-                                        }`}
+                                        className={`px-3 py-1 rounded ${currentPage === i + 1
+                                            ? "bg-indigo-600 text-white"
+                                            : "bg-gray-200"
+                                            }`}
                                     >
                                         {i + 1}
                                     </button>
@@ -276,25 +276,37 @@ const EmployeeTable = () => {
             {/* Interview Modal */}
             <Modal
                 isOpen={isInterviewModalOpen}
-                onClose={() => setIsInterviewModalOpen(false)}
-                title="Schedule 1st Round Interview"
+                onClose={() => {
+                    setIsInterviewModalOpen(false);
+
+                    if (selectedEmployee) {
+                        setActions((prev) => ({
+                            ...prev,
+                            [selectedEmployee.candidate_id]: ""
+                        }));
+                    }
+                }}
+                title="Schedule Interview"
                 maxWidth="max-w-2xl"
             >
-                <SetInterview
-                    employeeName={selectedEmployee?.name}
-                    employeeCode={selectedEmployee?.candidate_id}
-                    onClose={() => setIsInterviewModalOpen(false)}
-                />
             </Modal>
 
             {/* Details Modal */}
             <Modal
                 isOpen={isDetailsModalOpen}
-                onClose={() => setIsDetailsModalOpen(false)}
+                onClose={() => {
+                    setIsDetailsModalOpen(false);
+
+                    if (selectedCandidate) {
+                        setActions((prev) => ({
+                            ...prev,
+                            [selectedCandidate.candidate_id]: ""
+                        }));
+                    }
+                }}
                 title="Candidate Details"
                 maxWidth="max-w-2xl"
             >
-                <CandidateDetails candidate={selectedCandidate} />
             </Modal>
         </div>
     )
