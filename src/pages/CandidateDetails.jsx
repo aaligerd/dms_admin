@@ -47,6 +47,8 @@ const CandidateDetails = ({ candidate }) => {
                     <p className="font-semibold mb-3">Photo</p>
 
                     <div className="relative inline-block">
+
+                        {/* Photo Preview */}
                         <img
                             src={photoUrl}
                             alt="Candidate"
@@ -68,7 +70,7 @@ const CandidateDetails = ({ candidate }) => {
 
                     <div className="relative w-full h-[200px] border rounded-lg overflow-hidden shadow">
 
-                        {/* PDF Preview */}
+                        {/* CV Preview */}
                         <iframe
                             src={cvUrl}
                             title="CV Preview"
