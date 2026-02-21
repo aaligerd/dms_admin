@@ -152,31 +152,46 @@ const EmployeeTable = () => {
                             </div>
                         </div>
 
-                        <div className="overflow-x-auto border border-black">
-                            <table className="min-w-full text-sm text-left">
+                        <div className="overflow-x-auto border border-gray-300 dark:border-gray-700 rounded-lg">
+                            <table className="min-w-full text-sm text-left border-collapse">
+
                                 <thead className="bg-indigo-600 text-white">
                                     <tr>
-                                        <th className="px-6 py-3">ID</th>
-                                        <th className="px-6 py-3">Name</th>
-                                        <th className="px-6 py-3">Email</th>
-                                        <th className="px-6 py-3">Phone</th>
-                                        <th className="px-6 py-3">Status</th>
+                                        <th className="px-6 py-3 border-r border-indigo-500">ID</th>
+                                        <th className="px-6 py-3 border-r border-indigo-500">Name</th>
+                                        <th className="px-6 py-3 border-r border-indigo-500">Email</th>
+                                        <th className="px-6 py-3 border-r border-indigo-500">Phone</th>
+                                        <th className="px-6 py-3 border-r border-indigo-500">Status</th>
                                         <th className="px-6 py-3 text-center">Actions</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     {currentEmployees.map((emp, index) => (
-                                        <tr key={index} className="border-b hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                                        <tr
+                                            key={index}
+                                            className="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                                        >
+                                            <td className="px-6 py-4 border-r border-gray-300 dark:border-gray-700">
+                                                {emp.candidate_id}
+                                            </td>
 
-                                            <td className="px-6 py-4">{emp.candidate_id}</td>
-                                            <td className="px-6 py-4">{emp.name || "-"}</td>
-                                            <td className="px-6 py-4">{emp.email}</td>
-                                            <td className="px-6 py-4">{emp.phone || "-"}</td>
+                                            <td className="px-6 py-4 border-r border-gray-300 dark:border-gray-700">
+                                                {emp.name || "-"}
+                                            </td>
 
-                                            <td className="px-6 py-4">
+                                            <td className="px-6 py-4 border-r border-gray-300 dark:border-gray-700">
+                                                {emp.email}
+                                            </td>
+
+                                            <td className="px-6 py-4 border-r border-gray-300 dark:border-gray-700">
+                                                {emp.phone || "-"}
+                                            </td>
+
+                                            <td className="px-6 py-4 border-r border-gray-300 dark:border-gray-700">
                                                 <span
                                                     className={`font-semibold
-                                                    ${emp.status === "DATA UPDATED BY CANDIDATE"
+                                                            ${emp.status === "DATA UPDATED BY CANDIDATE"
                                                             ? "text-green-600"
                                                             : emp.status === "MAIL SEND TO CANDIDATE FOR CV UPLOAD"
                                                                 ? "text-yellow-500"
@@ -202,9 +217,7 @@ const EmployeeTable = () => {
                                                     </option>
 
                                                     {emp.status === "DATA UPDATED BY CANDIDATE" && (
-                                                        <option value="See Details">
-                                                            See Details
-                                                        </option>
+                                                        <option value="See Details">See Details</option>
                                                     )}
 
                                                     <option value="Interview Scheduled">
@@ -213,10 +226,8 @@ const EmployeeTable = () => {
 
                                                     <option value="Accepted">Accept</option>
                                                     <option value="Rejected">Reject</option>
-
                                                 </select>
                                             </td>
-
                                         </tr>
                                     ))}
                                 </tbody>
