@@ -152,6 +152,7 @@ const EmployeeTable = () => {
                             </div>
                         </div>
 
+                        
                         <div className="overflow-x-auto border border-gray-300 dark:border-gray-700 rounded-lg">
                             <table className="min-w-full text-sm text-left border-collapse">
 
@@ -334,3 +335,97 @@ const EmployeeTable = () => {
 }
 
 export default EmployeeTable;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// <div className="overflow-x-auto border border-black">
+//                             <table className="min-w-full text-sm text-left">
+//                                 <thead className="bg-indigo-600 text-white">
+//                                     <tr>
+//                                         <th className="px-6 py-3">ID</th>
+//                                         <th className="px-6 py-3">Name</th>
+//                                         <th className="px-6 py-3">Email</th>
+//                                         <th className="px-6 py-3">Phone</th>
+//                                         <th className="px-6 py-3">Status</th>
+//                                         <th className="px-6 py-3 text-center">Actions</th>
+//                                     </tr>
+//                                 </thead>
+//                                 <tbody>
+//                                     {currentEmployees.map((emp, index) => (
+//                                         <tr key={index} className="border-b hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+
+//                                             <td className="px-6 py-4">{emp.candidate_id}</td>
+//                                             <td className="px-6 py-4">{emp.name || "-"}</td>
+//                                             <td className="px-6 py-4">{emp.email}</td>
+//                                             <td className="px-6 py-4">{emp.phone || "-"}</td>
+
+//                                             <td className="px-6 py-4">
+//                                                 <span
+//                                                     className={`font-semibold
+//                                                     ${emp.status === "DATA UPDATED BY CANDIDATE"
+//                                                             ? "text-green-600"
+//                                                             : emp.status === "MAIL SEND TO CANDIDATE FOR CV UPLOAD"
+//                                                                 ? "text-yellow-500"
+//                                                                 : "text-gray-700 dark:text-gray-300"
+//                                                         }`}
+//                                                 >
+//                                                     {emp.status}
+//                                                 </span>
+//                                             </td>
+
+//                                             <td className="px-6 py-4 text-center">
+//                                                 <select
+//                                                     value={actions[emp.candidate_id] || ""}
+//                                                     onChange={(e) => {
+//                                                         if (e.target.value) {
+//                                                             handleAction(emp.candidate_id, emp, e.target.value);
+//                                                         }
+//                                                     }}
+//                                                     className="px-3 py-1 text-sm border rounded-md focus:ring focus:ring-indigo-300"
+//                                                 >
+//                                                     <option value="" disabled>
+//                                                         Select Action
+//                                                     </option>
+
+//                                                     {emp.status === "DATA UPDATED BY CANDIDATE" && (
+//                                                         <option value="See Details">
+//                                                             See Details
+//                                                         </option>
+//                                                     )}
+
+//                                                     <option value="Interview Scheduled">
+//                                                         Schedule Interview
+//                                                     </option>
+
+//                                                     <option value="Accepted">Accept</option>
+//                                                     <option value="Rejected">Reject</option>
+
+//                                                 </select>
+//                                             </td>
+
+//                                         </tr>
+//                                     ))}
+//                                 </tbody>
+//                             </table>
+
+//                             {filteredEmployees.length === 0 && (
+//                                 <p className="text-center py-6 text-gray-500">
+//                                     No employees found
+//                                 </p>
+//                             )}
+//                         </div>

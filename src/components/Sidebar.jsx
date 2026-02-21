@@ -226,7 +226,7 @@ const Sidebar = () => {
                 <div className="h-full px-4 py-8">
                     <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white mb-6">DMS Admin</h2>
                     <div className="flex flex-col justify-between flex-1 mt-6">
-                        <nav>
+                        <nav className='md:-mt-4'>
                             {navItems.map((item, index) => {
                                 if (item.path) {
                                     return (
