@@ -278,7 +278,6 @@ const EmployeeTable = () => {
                 isOpen={isInterviewModalOpen}
                 onClose={() => {
                     setIsInterviewModalOpen(false);
-
                     if (selectedEmployee) {
                         setActions((prev) => ({
                             ...prev,
@@ -289,6 +288,13 @@ const EmployeeTable = () => {
                 title="Schedule Interview"
                 maxWidth="max-w-2xl"
             >
+                {selectedEmployee && (
+                    <SetInterview
+                        employeeName={selectedEmployee.name}
+                        employeeCode={selectedEmployee.candidate_id}
+                        onClose={() => setIsInterviewModalOpen(false)}
+                    />
+                )}
             </Modal>
 
             {/* Details Modal */}
@@ -296,7 +302,6 @@ const EmployeeTable = () => {
                 isOpen={isDetailsModalOpen}
                 onClose={() => {
                     setIsDetailsModalOpen(false);
-
                     if (selectedCandidate) {
                         setActions((prev) => ({
                             ...prev,
@@ -307,6 +312,11 @@ const EmployeeTable = () => {
                 title="Candidate Details"
                 maxWidth="max-w-2xl"
             >
+                {selectedCandidate && (
+                    <CandidateDetails
+                        candidate={selectedCandidate}
+                    />
+                )}
             </Modal>
         </div>
     )
