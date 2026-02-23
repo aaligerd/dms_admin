@@ -119,7 +119,7 @@ const Sidebar = () => {
             )
         },
         {
-            name: 'Secreening Candidate Details', path: '/send-email', icon: (
+            name: 'Secreening Process', path: '/send-email', icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" viewBox="0 0 14 14" fill="currentColor">
                     <path
                         fillRule="evenodd"
@@ -226,7 +226,7 @@ const Sidebar = () => {
                 <div className="h-full px-4 py-8">
                     <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white mb-6">DMS Admin</h2>
                     <div className="flex flex-col justify-between flex-1 mt-6">
-                        <nav className='md:-mt-4'>
+                        <nav className='md:-mt-5 -mt-6 lg:-mt-3'> 
                             {navItems.map((item, index) => {
                                 if (item.path) {
                                     return (
