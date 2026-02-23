@@ -17,7 +17,7 @@ const EmployeeTable = () => {
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
     const [selectedCandidate, setSelectedCandidate] = useState(null);
 
-    // ✅ Pagination State
+    // Pagination State
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
@@ -106,7 +106,7 @@ const EmployeeTable = () => {
                     <Tabs />
                 </header>
 
-                <main className="flex justify-center p-6">
+                <main className="flex-1 overflow-y-auto p-6">
                     <div className="w-full max-w-7xl lg:max-w-7xl bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8">
 
                         <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 dark:text-white lg:-ml-19">
@@ -241,7 +241,7 @@ const EmployeeTable = () => {
                             )}
                         </div>
 
-                        {/* Pagination UI */}
+                        {/* Pagination */}
                         {totalPages > 1 && (
                             <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
 
