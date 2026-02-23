@@ -122,7 +122,7 @@ const RequisitionList = () => {
             </div>
 
             {/* 🔥 NEW FILTER SECTION */}
-            <div className="p-6 flex gap-4 items-end">
+            <div className="p-6 flex flex-wrap md:flex-nowrap gap-3 items-end">
 
               {/* ORG DROPDOWN */}
               <div>
@@ -151,7 +151,7 @@ const RequisitionList = () => {
                 <select
                   value={selectedDept}
                   onChange={(e) => setSelectedDept(e.target.value)}
-                  className="border px-4 py-2 rounded-lg w-60"
+                  className="border px-4 py-2 rounded-lg w-full sm:w-44 md:w-48 lg:w-60 min-w-0"
                 >
                   <option value="">All Departments</option>
                   {departments.map((dept) => (
@@ -164,7 +164,7 @@ const RequisitionList = () => {
 
               <button
                 onClick={handleSearch}
-                className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700"
+                className="bg-indigo-600 text-white px-4 sm:px-6 py-2 rounded-lg hover:bg-indigo-700 whitespace-nowrap"
               >
               🔍Search
               </button>
@@ -172,7 +172,7 @@ const RequisitionList = () => {
               {/* CLEAR BUTTON */}
               <button
                 onClick={handleClearFilters}
-                className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300"
+                className="bg-gray-200 text-gray-700 px-4 sm:px-6 py-2 rounded-lg hover:bg-gray-300 whitespace-nowrap"
               >
               🔄️Clear
               </button>
