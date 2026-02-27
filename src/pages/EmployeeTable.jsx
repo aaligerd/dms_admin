@@ -106,7 +106,7 @@ const EmployeeTable = () => {
                     <Tabs />
                 </header>
 
-                <main className="flex-1 flex flex-col p-4 overflow-hidden">
+                <main className="flex-1 flex flex-col p-4 overflow-hidden lg:ml-12">
                     <div className="w-full max-w-7xl bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 flex flex-col h-full overflow-hidden">
 
                         <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 dark:text-white lg:-ml-19">
@@ -153,7 +153,7 @@ const EmployeeTable = () => {
                         </div>
 
 
-                        <div className="flex-1 overflow-y-auto">
+                        <div className="overflow-y-auto">
                             <div className="overflow-x-auto border border-gray-300 dark:border-gray-700 rounded-lg">
                                 <table className="min-w-full text-sm text-left border-collapse">
 
@@ -222,12 +222,12 @@ const EmployeeTable = () => {
                                                             <option value="See Details">See Details</option>
                                                         )}
 
+                                                        {emp.status === "DATA UPDATED BY CANDIDATE" && (
                                                         <option value="Interview Scheduled">
                                                             Schedule Interview
                                                         </option>
+                                                         )}
 
-                                                        <option value="Accepted">Accept</option>
-                                                        <option value="Rejected">Reject</option>
                                                     </select>
                                                 </td>
                                             </tr>

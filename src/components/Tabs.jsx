@@ -10,6 +10,7 @@ const Tabs = () => {
     // { label: "Add Candidate", path: "/add-newcandidate" },
     // { label: "Set Interview", path: "/set-interview" },
     { label: "Candidate Table", path: "/candidate-table" },
+    { label: "Interview Details", path: "/interview-details" },
   ];
 
   return (

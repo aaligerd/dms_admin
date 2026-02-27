@@ -12,6 +12,7 @@ import RequisitionForm from "./pages/RequisitionForm";
 import AddNewEmployee from './pages/AddNewEmployee';
 import SendEmail from './pages/SendEmail';
 import EmployeeTable from './pages/EmployeeTable';
+import InterviewDetailsTable from './pages/InterviewDetailsTable';
 
 function App() {
   return (
@@ -81,6 +82,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <EmployeeTable />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/interview-details"
+            element={
+              <ProtectedRoute>
+                <InterviewDetailsTable />
               </ProtectedRoute>
             }
           />

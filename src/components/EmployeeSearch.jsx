@@ -523,16 +523,16 @@ const EmployeeSearch = () => {
                                         {searchResults.length > 0 ? (
                                             searchResults.map((emp) => (
                                                 <tr key={emp.emp_id}>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-left text-gray-900 dark:text-white">
                                                         {emp.emp_id}
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-left text-gray-500 dark:text-gray-300">
                                                         {emp.emp_name}
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-left text-gray-500 dark:text-gray-300">
                                                         {emp.email}
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-left text-gray-500 dark:text-gray-300">
                                                         {new Date(emp.join_date).toLocaleDateString()}
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
