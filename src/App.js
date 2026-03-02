@@ -13,6 +13,7 @@ import AddNewEmployee from './pages/AddNewEmployee';
 import SendEmail from './pages/SendEmail';
 import EmployeeTable from './pages/EmployeeTable';
 import InterviewDetailsTable from './pages/InterviewDetailsTable';
+import DocumentUploadForm from './pages/DocumentUploadForm';
 
 function App() {
   return (
@@ -65,6 +66,13 @@ function App() {
               path="/add-newcandidate/:tempcode"
               element={
                   <AddNewEmployee />
+              }
+            />
+
+            <Route
+              path="/uploaddocument"
+              element={
+                  <DocumentUploadForm/>
               }
             />
 
