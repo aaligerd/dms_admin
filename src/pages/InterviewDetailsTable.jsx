@@ -51,47 +51,64 @@ const InterviewDetailsTable = () => {
 
     const handleAction = async (id, emp, action) => {
 
-        if (action === "ACCEPTED") {
-            setSelectedEmpCode(emp.interview_id);
-            setSelectedInterviewStatus(action);
-            setIsRemarksModalOpen(true);
+    if (action === "ACCEPTED") {
+        setSelectedEmpCode(emp.interview_id);
+        setSelectedInterviewStatus(action);
+        setIsRemarksModalOpen(true);
+    }
+
+    else if (action === "RESCHEDULE") {
+        setSelectedRescheduleId(emp.interview_id);
+        setIsRescheduleModalOpen(true);
+    }
+
+    else if (action === "View") {
+
+        try {
+            const response = await axios.post(
+                `${API_BASE_URL}/interview/get/byid`,
+                {
+                    interview_id: emp.interview_id
+                }
+            );
+
+            const data = response.data?.data?.[0];
+
+            setSelectedInterviewData(data);
+            setIsInterviewDetailsOpen(true);
+
+        } catch (error) {
+            console.error("Error fetching interview details:", error);
+            alert("Failed to fetch interview details");
+        }
+    }
+
+    else if (action === "Send Mail") {
+
+        try {
+
+            await axios.post(`${API_BASE_URL}/candidate/ask-for-document`, {
+                candidate_id: emp.candidate_id
+            });
+
+            alert("BGV Mail sent successfully!");
+
+        } catch (error) {
+            console.error("Error sending BGV mail:", error);
+            alert("Failed to send BGV Mail");
         }
 
-        else if (action === "RESCHEDULE") {
-            setSelectedRescheduleId(emp.interview_id);
-            setIsRescheduleModalOpen(true);
-        }
+    }
 
-        else if (action === "View") {
+    else {
+        alert(`Candidate ${emp.candidate_id} marked as ${action}`);
+    }
 
-            try {
-                const response = await axios.post(
-                    `${API_BASE_URL}/interview/get/byid`,
-                    {
-                        interview_id: emp.interview_id
-                    }
-                );
-
-                const data = response.data?.data?.[0];
-
-                setSelectedInterviewData(data);
-                setIsInterviewDetailsOpen(true);
-
-            } catch (error) {
-                console.error("Error fetching interview details:", error);
-                alert("Failed to fetch interview details");
-            }
-        }
-
-        else {
-            alert(`Candidate ${emp.candidate_id} marked as ${action}`);
-        }
-
-        setActions((prev) => ({
-            ...prev,
-            [id]: ""
-        }));
-    };
+    setActions((prev) => ({
+        ...prev,
+        [id]: ""
+    }));
+};
 
     const handleSubmitRemarks = async () => {
 

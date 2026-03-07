@@ -1,8 +1,11 @@
-"use client";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { FaUserPlus } from "react-icons/fa6";
+import axios from "axios";
 
 export default function DocumentUploadForm() {
+  const { candidate_id } = useParams();
+
   const [formData, setFormData] = useState({
     panNumber: "",
     aadhaarNumber: "",
@@ -13,6 +16,8 @@ export default function DocumentUploadForm() {
     aadhaarFile: null,
     passbookFile: null,
   });
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   const [marksheets, setMarksheets] = useState([
     { name: "", file: null },
@@ -62,17 +67,75 @@ export default function DocumentUploadForm() {
     setCertificates(updated.length ? updated : [{ name: "", file: null }]);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const payload = {
-      ...formData,
-      marksheets,
-      certificates,
-    };
+  try {
+    const form = new FormData();
 
-    console.log(payload);
-  };
+    form.append("pan_number", formData.panNumber);
+    form.append("aadhaar_number", formData.aadhaarNumber);
+    form.append("bank_name", formData.bankName);
+    form.append("account_number", formData.accountNumber);
+    form.append("ifsc", formData.ifscCode);
+
+    form.append("candidate_id", candidate_id); 
+
+    if (formData.panFile) form.append("pan_file", formData.panFile);
+    if (formData.aadhaarFile) form.append("aadhaar_file", formData.aadhaarFile);
+    if (formData.passbookFile) form.append("passbook_file", formData.passbookFile);
+
+    marksheets.forEach((m, index) => {
+      form.append(`marksheets[${index}][name]`, m.name);
+      if (m.file) {
+        form.append(`marksheets[${index}][file]`, m.file);
+      }
+    });
+
+    certificates.forEach((c, index) => {
+      form.append(`certificates[${index}][name]`, c.name);
+      if (c.file) {
+        form.append(`certificates[${index}][file]`, c.file);
+      }
+    });
+
+    const response = await axios.post(
+      `${API_BASE_URL}/candidate/bgv-documents`,
+      form,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log(response.data);
+    alert("Documents uploaded successfully!");
+
+    alert("Documents uploaded successfully!");
+
+// reset HTML form (this clears file inputs)
+e.target.reset();
+
+setFormData({
+  panNumber: "",
+  aadhaarNumber: "",
+  bankName: "",
+  accountNumber: "",
+  ifscCode: "",
+  panFile: null,
+  aadhaarFile: null,
+  passbookFile: null,
+});
+
+setMarksheets([{ name: "", file: null }]);
+setCertificates([{ name: "", file: null }]);
+
+  } catch (error) {
+    console.error(error);
+    alert("Upload failed");
+  }
+};
 
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -95,11 +158,11 @@ export default function DocumentUploadForm() {
                 </h2>
               </div>
 
-              {/* Form */}
               <form onSubmit={handleSubmit} className="p-8 space-y-10">
 
                 {/* PAN & Aadhaar Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                   <div>
                     <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-gray-200">
                       PAN Number
@@ -149,6 +212,7 @@ export default function DocumentUploadForm() {
                       className="block w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition"
                     />
                   </div>
+
                 </div>
 
                 {/* Bank Section */}
@@ -158,6 +222,7 @@ export default function DocumentUploadForm() {
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                     <input
                       type="text"
                       name="bankName"
@@ -166,6 +231,7 @@ export default function DocumentUploadForm() {
                       onChange={handleChange}
                       className="block w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition"
                     />
+
                     <input
                       type="text"
                       name="accountNumber"
@@ -174,6 +240,7 @@ export default function DocumentUploadForm() {
                       onChange={handleChange}
                       className="block w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition"
                     />
+
                     <input
                       type="text"
                       name="ifscCode"
@@ -182,12 +249,14 @@ export default function DocumentUploadForm() {
                       onChange={handleChange}
                       className="block w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition"
                     />
+
                     <input
                       type="file"
                       name="passbookFile"
                       onChange={handleChange}
                       className="block w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition"
                     />
+
                   </div>
                 </div>
 
@@ -198,10 +267,8 @@ export default function DocumentUploadForm() {
                   </h3>
 
                   {marksheets.map((mark, index) => (
-                    <div
-                      key={index}
-                      className="mb-4 p-4 rounded-lg border bg-gray-50 dark:bg-gray-700 flex flex-col md:flex-row gap-4 md:items-end"
-                    >
+                    <div key={index} className="mb-4 p-4 rounded-lg border bg-gray-50 dark:bg-gray-700 flex flex-col md:flex-row gap-4 md:items-end">
+
                       <input
                         type="text"
                         placeholder="Marksheet Name"
@@ -211,6 +278,7 @@ export default function DocumentUploadForm() {
                         }
                         className="block w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition flex-1"
                       />
+
                       <input
                         type="file"
                         onChange={(e) =>
@@ -218,6 +286,7 @@ export default function DocumentUploadForm() {
                         }
                         className="block w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition flex-1"
                       />
+
                       <button
                         type="button"
                         onClick={() => removeMarksheet(index)}
@@ -225,6 +294,7 @@ export default function DocumentUploadForm() {
                       >
                         Remove
                       </button>
+
                     </div>
                   ))}
 
@@ -235,6 +305,7 @@ export default function DocumentUploadForm() {
                   >
                     + Add Marksheet
                   </button>
+
                 </div>
 
                 {/* CERTIFICATES */}
@@ -244,10 +315,8 @@ export default function DocumentUploadForm() {
                   </h3>
 
                   {certificates.map((cert, index) => (
-                    <div
-                      key={index}
-                      className="mb-4 p-4 rounded-lg border bg-gray-50 dark:bg-gray-700 flex flex-col md:flex-row gap-4 md:items-end"
-                    >
+                    <div key={index} className="mb-4 p-4 rounded-lg border bg-gray-50 dark:bg-gray-700 flex flex-col md:flex-row gap-4 md:items-end">
+
                       <input
                         type="text"
                         placeholder="Certificate Name"
@@ -257,6 +326,7 @@ export default function DocumentUploadForm() {
                         }
                         className="block w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition flex-1"
                       />
+
                       <input
                         type="file"
                         onChange={(e) =>
@@ -264,6 +334,7 @@ export default function DocumentUploadForm() {
                         }
                         className="block w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none transition flex-1"
                       />
+
                       <button
                         type="button"
                         onClick={() => removeCertificate(index)}
@@ -271,6 +342,7 @@ export default function DocumentUploadForm() {
                       >
                         Remove
                       </button>
+
                     </div>
                   ))}
 
@@ -281,9 +353,9 @@ export default function DocumentUploadForm() {
                   >
                     + Add Certificate
                   </button>
+
                 </div>
 
-                {/* Submit */}
                 <div className="flex justify-center">
                   <button
                     type="submit"
@@ -294,6 +366,7 @@ export default function DocumentUploadForm() {
                 </div>
 
               </form>
+
             </div>
           </div>
         </main>
@@ -301,5 +374,3 @@ export default function DocumentUploadForm() {
     </div>
   );
 }
-
-//candidate/docx/save

@@ -70,7 +70,7 @@ function App() {
             />
 
             <Route
-              path="/uploaddocument"
+              path="/upload-document/:candidate_id"
               element={
                   <DocumentUploadForm/>
               }
