@@ -218,16 +218,20 @@ const EmployeeTable = () => {
                                                             Select Action
                                                         </option>
 
-                                                        {/* {emp.status === "DATA UPDATED BY CANDIDATE" || emp.status === "ACCEPTED" && (
-                                                            <option value="See Details">See Details</option>
-                                                        )} */}
+                                                        {["DATA UPDATED BY CANDIDATE", "ACCEPTED"].includes(emp.status) && (
+                                                            <>
+                                                                <option value="See Details">See Details</option>
+                                                                <option value="Interview Scheduled">
+                                                                    Schedule Interview
+                                                                </option>
+                                                            </>
+                                                        )}
 
-                                                        <option value="See Details">See Details</option>
-
-                                                        {emp.status === "DATA UPDATED BY CANDIDATE" || emp.status === "ACCEPTED" && (
-                                                            <option value="Interview Scheduled">
-                                                                Schedule Interview
-                                                            </option>
+                                                        {emp.status === "MAIL SEND FOR BGV" && (
+                                                            <>
+                                                                <option value="See Verification Details">Verification Details</option>
+                                                                <option value="Send offer letter">Send Offer Letter</option>
+                                                            </>
                                                         )}
 
                                                     </select>
