@@ -218,11 +218,11 @@ const EmployeeTable = () => {
                                                             Select Action
                                                         </option>
 
-                                                        {emp.status === "DATA UPDATED BY CANDIDATE" && (
+                                                        {emp.status === "DATA UPDATED BY CANDIDATE" || emp.status === "ACCEPTED" && (
                                                             <option value="See Details">See Details</option>
                                                         )}
 
-                                                        {emp.status === "DATA UPDATED BY CANDIDATE" && (
+                                                        {emp.status === "DATA UPDATED BY CANDIDATE" || emp.status === "ACCEPTED" && (
                                                         <option value="Interview Scheduled">
                                                             Schedule Interview
                                                         </option>
