@@ -14,6 +14,7 @@ import SendEmail from './pages/SendEmail';
 import EmployeeTable from './pages/EmployeeTable';
 import InterviewDetailsTable from './pages/InterviewDetailsTable';
 import DocumentUploadForm from './pages/DocumentUploadForm';
+import CandidateForm from './pages/CandidateForm';
 
 function App() {
   return (
@@ -72,7 +73,14 @@ function App() {
             <Route
               path="/upload-document/:candidate_id"
               element={
-                  <DocumentUploadForm/>
+                  <DocumentUploadForm />
+              }
+            />
+
+            <Route
+              path="/candidate-form/:candidate_id"
+              element={
+                  <CandidateForm />
               }
             />
 
