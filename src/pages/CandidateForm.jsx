@@ -37,13 +37,16 @@ export default function CandidateForm() {
         return age;
     };
 
+    const inputStyle =
+        "border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full";
+
     useEffect(() => {
         const fetchCandidate = async () => {
             try {
                 setLoading(true);
 
                 const res = await axios.post(
-                    "http://10.10.20.230:9090/s4/api/v1/candidate/getbyid",
+                    `${process.env.REACT_APP_API_BASE_URL}/candidate/getbyid`,
                     { candidate_id }
                 );
 
@@ -104,7 +107,7 @@ export default function CandidateForm() {
                 name={name}
                 value={formData[name] || ""}
                 onChange={handleChange}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-center"
+                className={`${inputStyle} text-center`}
             />
         </div>
     );
@@ -120,7 +123,7 @@ export default function CandidateForm() {
                 rows={3}
                 value={formData[name] || ""}
                 onChange={handleChange}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`${inputStyle} resize-none`}
             />
         </div>
     );
@@ -135,97 +138,118 @@ export default function CandidateForm() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 flex justify-center py-10">
-            <div className="bg-white w-full max-w-4xl p-6 rounded-xl shadow-lg">
+        <div className="min-h-screen bg-gray-100 flex justify-center px-3 sm:px-4 py-6 sm:py-10">
 
-                {/* Header */}
-                <div className="relative mb-6">
+            {/* FORM LAYOUT */}
+            <div className="bg-white w-full max-w-4xl rounded-xl shadow-lg overflow-hidden">
+
+                {/* HEADER */}
+                <div className="px-4 sm:px-6 py-4 border-b bg-gray-50 flex items-center justify-between">
+
+                    {/* LEFT */}
+                    <div>
+                        <h1 className="text-sm sm:text-lg md:text-xl font-bold text-gray-800 font-serif">
+                            Candidate Validation Form
+                        </h1>
+                        <p className="text-[10px] sm:text-xs text-gray-500">
+                            Fill candidate details carefully
+                        </p>
+                    </div>
+
+                    {/* RIGHT (LOGO) */}
                     <img
                         src="https://th.bing.com/th/id/OIP.KBt6CnzZHNkYNzszAeXJSwHaD5?w=189&h=99&c=7&r=0&o=7&pid=1.7&rm=3"
                         alt="logo"
-                        className="absolute right-1 top-0 w-20"
+                        className="w-16 sm:w-20 object-contain"
                     />
-
-                    <h1 className="text-2xl font-bold text-center underline font-serif">
-                        Candidate Validation Form
-                    </h1>
                 </div>
 
-                {/* FORM GRID */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* FORM BODY */}
+                <div className="p-4 sm:p-6">
 
-                    <Input label="Candidate Name" name="candidateName" />
-                    <Input label="Position Applied" name="position" />
+                    {/* GRID */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 
-                    <Input label="Highest Qualification" name="qualification" />
-                    <Input label="Contact Number" name="contact" />
+                        <Input label="Candidate Name" name="candidateName" />
+                        <Input label="Position Applied" name="position" />
 
-                    <Input label="Current Company" name="currentCompany" />
-                    <Input label="Email ID" name="email" type="email" />
+                        <Input label="Highest Qualification" name="qualification" />
+                        <Input label="Contact Number" name="contact" />
 
-                    <Input label="Total Experience" name="totalExperience" />
-                    <Input label="Relevant Experience" name="relevantExperience" />
+                        <Input label="Current Company" name="currentCompany" />
+                        <Input label="Email ID" name="email" type="email" />
 
-                    {/* DOB + AGE */}
-                    <div className="flex flex-col gap-1">
-                        <label className="text-sm font-semibold text-gray-700 font-serif">
-                            D.O.B
-                        </label>
-                        <input
-                            type="date"
-                            name="dob"
-                            value={formData.dob || ""}
-                            onChange={handleChange}
-                            className="border border-gray-300 rounded-md px-3 py-2 text-sm text-center"
-                        />
-                        {formData.dob && (
-                            <span className="text-xs text-gray-500">
-                                Age: {calculateAge(formData.dob)} years
-                            </span>
-                        )}
+                        <Input label="Total Experience" name="totalExperience" />
+                        <Input label="Relevant Experience" name="relevantExperience" />
+
+                        {/* DOB */}
+                        <div className="flex flex-col gap-1">
+                            <label className="text-xs sm:text-sm font-semibold text-gray-700 font-serif">
+                                D.O.B
+                            </label>
+                            <input
+                                type="date"
+                                name="dob"
+                                value={formData.dob || ""}
+                                onChange={handleChange}
+                                className={`${inputStyle} text-center`}
+                            />
+                            {formData.dob && (
+                                <span className="text-[10px] sm:text-xs text-gray-500">
+                                    Age: {calculateAge(formData.dob)} years
+                                </span>
+                            )}
+                        </div>
+
+                        <Input label="Work Location" name="location" />
+
+                        <Input label="Current In-hand Salary" name="currentInHand" />
+                        <Input label="Expected In-hand Salary" name="expectedInHand" />
+
+                        <Input label="Current CTC" name="currentCTC" />
+                        <Input label="Expected CTC" name="expectedCTC" />
+
+                        <TextArea label="Detailed KRA" name="kra" />
+                        <TextArea label="Significant Achievements" name="achievements" />
+                        <TextArea label="Reason For Leaving" name="reason" />
+                        <TextArea label="Family Details" name="family" />
+                        <TextArea label="Strength" name="strength" />
+                        <TextArea label="Weakness" name="weakness" />
+                        <TextArea label="Why Ei Samay?" name="why" />
+                        <TextArea label="Reference" name="reference" />
+
                     </div>
 
-                    <Input label="Work Location" name="location" />
-
-                    <Input label="Current In-hand Salary" name="currentInHand" />
-                    <Input label="Expected In-hand Salary" name="expectedInHand" />
-
-                    <Input label="Current CTC" name="currentCTC" />
-                    <Input label="Expected CTC" name="expectedCTC" />
-
-                    <TextArea label="Detailed KRA" name="kra" />
-                    <TextArea label="Significant Achievements" name="achievements" />
-                    <TextArea label="Reason For Leaving" name="reason" />
-                    <TextArea label="Family Details" name="family" />
-                    <TextArea label="Strength" name="strength" />
-                    <TextArea label="Weakness" name="weakness" />
-                    <TextArea label="Why Ei Samay?" name="why" />
-                    <TextArea label="Reference" name="reference" />
+                    {/* REMARKS */}
+                    <div className="mt-4">
+                        <label className="text-xs sm:text-sm font-semibold text-gray-700 font-serif">
+                            Remarks
+                        </label>
+                        <textarea
+                            name="remarks"
+                            rows={3}
+                            value={formData.remarks || ""}
+                            onChange={handleChange}
+                            className={`${inputStyle} resize-none`}
+                        />
+                    </div>
 
                 </div>
 
-                {/* Remarks */}
-                <div className="mt-4">
-                    <label className="text-sm font-semibold text-gray-700 font-serif">
-                        Remarks
-                    </label>
-                    <textarea
-                        name="remarks"
-                        rows={3}
-                        value={formData.remarks || ""}
-                        onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
-                    />
-                </div>
+                {/* BUTTON PART */}
+                <div className="px-4 sm:px-6 py-4 border-t bg-gray-50 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-center">
 
-                {/* Submit */}
-                <div className="text-center mt-6">
+                    <p className="text-[10px] sm:text-xs text-gray-400 text-center sm:text-left">
+                        All fields are confidential and secured
+                    </p>
+
                     <button
                         onClick={() => console.log(formData)}
-                        className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 font-serif"
+                        className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2.5 rounded-md shadow hover:bg-indigo-700 transition-all"
                     >
                         Submit
                     </button>
+
                 </div>
 
             </div>
