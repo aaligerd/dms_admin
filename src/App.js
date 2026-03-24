@@ -15,6 +15,7 @@ import EmployeeTable from './pages/EmployeeTable';
 import InterviewDetailsTable from './pages/InterviewDetailsTable';
 import DocumentUploadForm from './pages/DocumentUploadForm';
 import CandidateForm from './pages/CandidateForm';
+import CandidateAssessmentForm from './pages/CandidateAssessmentForm';
 
 function App() {
   return (
@@ -55,36 +56,43 @@ function App() {
               </ProtectedRoute>
             }
           />
-        
+
           <Route
-              path="/add-employee"
-              element={
-                <AddEmployee />
-              }
-            />
+            path="/add-employee"
+            element={
+              <AddEmployee />
+            }
+          />
 
-            <Route
-              path="/add-newcandidate/:tempcode"
-              element={
-                  <AddNewEmployee />
-              }
-            />
+          <Route
+            path="/add-newcandidate/:tempcode"
+            element={
+              <AddNewEmployee />
+            }
+          />
 
-            <Route
-              path="/upload-document/:candidate_id"
-              element={
-                  <DocumentUploadForm />
-              }
-            />
+          <Route
+            path="/upload-document/:candidate_id"
+            element={
+              <DocumentUploadForm />
+            }
+          />
 
-            <Route
-              path="/candidate-form/:candidate_id"
-              element={
-                  <CandidateForm />
-              }
-            />
+          <Route
+            path="/candidate-form/:candidate_id"
+            element={
+              <CandidateForm />
+            }
+          />
 
-            <Route
+          <Route
+            path="/assessment-form"
+            element={
+              <CandidateAssessmentForm />
+            }
+          />
+
+          <Route
             path="/send-email"
             element={
               <ProtectedRoute>
@@ -120,9 +128,9 @@ function App() {
             }
           />
 
-          <Route path="/requisition" 
-          element={
-          <ProtectedRoute><RequisitionList /></ProtectedRoute>} 
+          <Route path="/requisition"
+            element={
+              <ProtectedRoute><RequisitionList /></ProtectedRoute>}
           />
           <Route
             path="/requisition/update/:id"

@@ -158,7 +158,7 @@ export default function CandidateForm() {
 
                     {/* RIGHT (LOGO) */}
                     <img
-                        src="https://th.bing.com/th/id/OIP.KBt6CnzZHNkYNzszAeXJSwHaD5?w=189&h=99&c=7&r=0&o=7&pid=1.7&rm=3"
+                        src="/eisamay.png"
                         alt="logo"
                         className="w-16 sm:w-20 object-contain"
                     />
