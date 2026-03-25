@@ -213,7 +213,7 @@ export default function CandidateAssessmentForm() {
                 <div className="px-6 py-4 border-t bg-gray-50 flex justify-end">
                     <button
                         onClick={() => console.log(formData)}
-                        className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+                        className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition-all"
                     >
                         Submit Form
                     </button>
