@@ -1,8 +1,58 @@
+"use client";
+
 import React, { useState } from "react";
+import axios from "axios";
+
+/* MOVE COMPONENTS OUTSIDE */
+
+const Input = ({ label, name, value, onChange }) => (
+    <div className="flex flex-col gap-1">
+        <label className="text-sm font-semibold text-gray-700">{label}</label>
+        <input
+            name={name}
+            value={value || ""}
+            onChange={onChange}
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500 outline-none"
+        />
+    </div>
+);
+
+const TextArea = ({ label, name, value, onChange }) => (
+    <div className="flex flex-col gap-1 col-span-2">
+        <label className="text-sm font-semibold text-gray-700">{label}</label>
+        <textarea
+            name={name}
+            rows={3}
+            value={value || ""}
+            onChange={onChange}
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500 outline-none resize-none"
+        />
+    </div>
+);
+
+const Rating = ({ label, name, value, onChange }) => (
+    <div className="flex flex-col gap-2">
+        <label className="text-sm font-semibold text-gray-800">{label}</label>
+        <select
+            name={name}
+            value={value || ""}
+            onChange={onChange}
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500"
+        >
+            <option value="">Select Rating</option>
+            <option>5 - Exceptional</option>
+            <option>4 - Exceeds Expectation</option>
+            <option>3 - Meets Expectation</option>
+            <option>2 - Below Expectation</option>
+            <option>1 - Not Fit</option>
+        </select>
+    </div>
+);
 
 export default function CandidateAssessmentForm() {
 
     const [formData, setFormData] = useState({});
+    const [submitting, setSubmitting] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -11,49 +61,27 @@ export default function CandidateAssessmentForm() {
         });
     };
 
-    const Input = ({ label, name }) => (
-        <div className="flex flex-col gap-1">
-            <label className="text-sm font-semibold text-gray-700">{label}</label>
-            <input
-                name={name}
-                value={formData[name] || ""}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500 outline-none"
-            />
-        </div>
-    );
+    /* SUBMIT HANDLER */
+    const handleSubmit = async () => {
+        try {
+            setSubmitting(true);
 
-    const TextArea = ({ label, name }) => (
-        <div className="flex flex-col gap-1 col-span-2">
-            <label className="text-sm font-semibold text-gray-700">{label}</label>
-            <textarea
-                name={name}
-                rows={3}
-                value={formData[name] || ""}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500 outline-none resize-none"
-            />
-        </div>
-    );
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_BASE_URL}/assessment`,
+                formData
+            );
 
-    const Rating = ({ label, name }) => (
-        <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-gray-800">{label}</label>
-            <select
-                name={name}
-                value={formData[name] || ""}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-500"
-            >
-                <option value="">Select Rating</option>
-                <option>5 - Exceptional</option>
-                <option>4 - Exceeds Expectation</option>
-                <option>3 - Meets Expectation</option>
-                <option>2 - Below Expectation</option>
-                <option>1 - Not Fit</option>
-            </select>
-        </div>
-    );
+            console.log("Response:", res.data);
+
+            alert("Assessment submitted successfully");
+
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong");
+        } finally {
+            setSubmitting(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 flex justify-center py-6 px-3">
@@ -75,19 +103,14 @@ export default function CandidateAssessmentForm() {
 
                 {/* BASIC DETAILS */}
                 <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                    <Input label="Applicant Name" name="applicantName" />
-                    <Input label="Position" name="position" />
-
-                    <Input label="Department" name="department" />
-                    <Input label="HR Name" name="hrName" />
-
-                    <Input label="Current Organisation" name="organisation" />
-                    <Input label="Total Experience" name="experience" />
-
-                    <Input label="Highest Qualification" name="qualification" />
-                    <Input label="Notice Period" name="noticePeriod" />
-
+                    <Input label="Applicant Name" name="applicantName" value={formData.applicantName} onChange={handleChange} />
+                    <Input label="Position" name="position" value={formData.position} onChange={handleChange} />
+                    <Input label="Department" name="department" value={formData.department} onChange={handleChange} />
+                    <Input label="HR Name" name="hrName" value={formData.hrName} onChange={handleChange} />
+                    <Input label="Current Organisation" name="organisation" value={formData.organisation} onChange={handleChange} />
+                    <Input label="Total Experience" name="experience" value={formData.experience} onChange={handleChange} />
+                    <Input label="Highest Qualification" name="qualification" value={formData.qualification} onChange={handleChange} />
+                    <Input label="Notice Period" name="noticePeriod" value={formData.noticePeriod} onChange={handleChange} />
                 </div>
 
                 {/* INSTRUCTION */}
@@ -95,13 +118,11 @@ export default function CandidateAssessmentForm() {
                     Please evaluate the candidate using the rating scale below.
                 </div>
 
-                {/* SECTION COMPONENT */}
+                {/* SECTIONS */}
                 {[
                     {
                         title: "1. General Background",
-                        fields: [
-                            { label: "Background Assessment", name: "background" }
-                        ]
+                        fields: [{ label: "Background Assessment", name: "background" }]
                     },
                     {
                         title: "2. Technical Competency",
@@ -132,24 +153,29 @@ export default function CandidateAssessmentForm() {
                         ]
                     }
                 ].map((section, i) => (
-
                     <div key={i} className="px-6 pb-6">
 
-                        {/* SECTION TITLE */}
                         <div className="bg-yellow-400 px-4 py-2 font-semibold text-sm rounded">
                             {section.title}
                         </div>
 
-                        {/* SECTION CONTENT */}
                         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-
                             {section.fields.map((f, idx) => (
                                 <React.Fragment key={idx}>
-                                    <Rating label={f.label} name={`${f.name}_rating`} />
-                                    <TextArea label="Assessment Notes" name={`${f.name}_note`} />
+                                    <Rating
+                                        label={f.label}
+                                        name={`${f.name}_rating`}
+                                        value={formData[`${f.name}_rating`]}
+                                        onChange={handleChange}
+                                    />
+                                    <TextArea
+                                        label="Assessment Notes"
+                                        name={`${f.name}_note`}
+                                        value={formData[`${f.name}_note`]}
+                                        onChange={handleChange}
+                                    />
                                 </React.Fragment>
                             ))}
-
                         </div>
 
                     </div>
@@ -164,45 +190,35 @@ export default function CandidateAssessmentForm() {
 
                     <div className="mt-4 space-y-5">
 
-                        {/* Cumulative Score */}
-                        <div>
-                            <Input label="Cumulative Score" name="score" />
-                        </div>
-
-                        {/* Remarks */}
-                        <div>
-                            <TextArea label="Overall Remarks" name="remarks" />
-                        </div>
+                        <Input label="Cumulative Score" name="score" value={formData.score} onChange={handleChange} />
+                        <TextArea label="Overall Remarks" name="remarks" value={formData.remarks} onChange={handleChange} />
 
                         {/* DECISION */}
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-
                             {["Proceed", "Hold", "Reject"].map((btn, i) => (
                                 <button
                                     key={i}
                                     type="button"
                                     onClick={() => setFormData({ ...formData, decision: btn })}
-                                    className={`w-full sm:w-auto px-5 py-3 rounded-md font-semibold shadow text-sm transition ${btn === "Proceed"
-                                        ? "bg-green-500 text-white"
-                                        : btn === "Hold"
-                                            ? "bg-yellow-400 text-black"
-                                            : "bg-red-500 text-white"
+                                    className={`w-full sm:w-auto px-5 py-3 rounded-md font-semibold shadow text-sm transition 
+                                    ${btn === "Proceed"
+                                            ? "bg-green-500 text-white"
+                                            : btn === "Hold"
+                                                ? "bg-yellow-400 text-black"
+                                                : "bg-red-500 text-white"
                                         }
                                     ${formData.decision === btn ? "ring-2 ring-offset-2 ring-gray-800" : ""}
-                            `}
+                                `}
                                 >
                                     {btn}
                                 </button>
                             ))}
-
                         </div>
 
-                        {/* SIGNATURE SECTION */}
+                        {/* SIGNATURE */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                            <Input label="Signature" name="signature" />
-                            <Input label="Name & Designation" name="designation" />
-
+                            <Input label="Signature" name="signature" value={formData.signature} onChange={handleChange} />
+                            <Input label="Name & Designation" name="designation" value={formData.designation} onChange={handleChange} />
                         </div>
 
                     </div>
@@ -212,10 +228,15 @@ export default function CandidateAssessmentForm() {
                 {/* SUBMIT */}
                 <div className="px-6 py-4 border-t bg-gray-50 flex justify-end">
                     <button
-                        onClick={() => console.log(formData)}
-                        className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition-all"
+                        onClick={handleSubmit}
+                        disabled={submitting}
+                        className={`px-6 py-2 rounded text-white transition-all
+                            ${submitting
+                                ? "bg-gray-400"
+                                : "bg-indigo-600 hover:bg-indigo-700"
+                            }`}
                     >
-                        Submit Form
+                        {submitting ? "Submitting..." : "Submit Form"}
                     </button>
                 </div>
 
